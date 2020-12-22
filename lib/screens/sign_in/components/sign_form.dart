@@ -9,6 +9,7 @@ import 'package:fypapp/components/form_error.dart';
 import 'package:fypapp/screens/forgot_password/forgot_password_screen.dart';
 import 'package:fypapp/screens/login_success/login_success_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
 
 
@@ -16,6 +17,8 @@ class SignForm extends StatefulWidget {
   @override
   _SignFormState createState() => _SignFormState();
 }
+
+
 
 class _SignFormState extends State<SignForm> {
   final TextEditingController emailController = TextEditingController();
@@ -26,6 +29,8 @@ class _SignFormState extends State<SignForm> {
   bool remember = false;
   bool _isLoading =false;
   final List<String> errors = [];
+
+
 
   void addError({String error}) {
     if (!errors.contains(error))
@@ -43,29 +48,76 @@ class _SignFormState extends State<SignForm> {
 
   signIn(String email, password) async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    Map data = {
-      'email': email,
-      'password': password,
-    };
+
     var jsonResponse = null;
-    var response = await http.post("http/xasdasd", body: data);
+    var response = await http.post("http://192.168.8.126:8090/sign_in",
+        headers: <String, String>{"Content-Type":"application/json"},
+        body: jsonEncode(<String, String>{
+          'email': email,
+          'password': password,
+        }));
     if(response.statusCode == 200) {
       jsonResponse = json.decode(response.body);
-      if(jsonResponse != null) {
+
+      var jsonString = jsonResponse['sign_in'];
+      var jsonException = [];
+      jsonException = jsonResponse['exception_message'];
+
+      if (jsonString == "success") {
         setState(() {
           _isLoading = false;
         });
         sharedPreferences.setString("token", jsonResponse['token']);
-        Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (BuildContext context) => LoginSuccessScreen()), (Route<dynamic> route) => false);
+        Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(
+            builder: (BuildContext context) => LoginSuccessScreen()), (
+            Route<dynamic> route) => false);
       }
-    }
-    else {
-      setState(() {
-        _isLoading = false;
-      });
-      print(response.body);
-    }
+      else if (jsonString == "fail") {
+        var jsonErrorMessage = [];
+         jsonErrorMessage = jsonResponse['errorMessage'];
+        if(jsonErrorMessage.length != 0){
+          String error = jsonErrorMessage[0];
+          if(error.contains("Wrong email")){
+
+            Fluttertoast.showToast(
+                msg: "You enter wrong email or password",
+                toastLength: Toast.LENGTH_LONG,
+                gravity: ToastGravity.BOTTOM,
+                backgroundColor: Colors.tealAccent,
+                textColor: Colors.black,
+                fontSize: 18.0);
+
+          }else if(error.contains("Account has not")){
+
+            Fluttertoast.showToast(
+                msg: "You have not activate your account",
+                toastLength: Toast.LENGTH_LONG,
+                gravity: ToastGravity.BOTTOM,
+                backgroundColor: Colors.tealAccent,
+                textColor: Colors.black,
+                fontSize: 18.0);
+          }
+        }
+        setState(() {
+          _isLoading = false;
+        });
+      }
+
+      if(jsonException.length != 0 ){
+        print(jsonException[0]);
+        print("you are in exception");
+        print(jsonResponse['errorMessage']);
+      }
+
+    }else {
+        setState(() {
+          _isLoading = false;
+        });
+        print(response.body);
+      }
   }
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -110,18 +162,18 @@ class _SignFormState extends State<SignForm> {
           FormError(errors: errors),
           SizedBox(height: getProportionateScreenHeight(20)),
           DefaultButton(
-            text: "Continue",
-            press: () {
+            text: "Sign In",
+            press: () async {
               if (_formKey.currentState.validate()) {
                 _formKey.currentState.save();
                 final String email = emailController.text;
                 final String password = passwordController.text;
+
                 // if all are valid then go to success screen
                 setState(() {
                   _isLoading = true;
                 });
-                // signIn(email, password);
-                Navigator.pushNamed(context, LoginSuccessScreen.routeName);
+                signIn(email, password);
               }
             },
           ),

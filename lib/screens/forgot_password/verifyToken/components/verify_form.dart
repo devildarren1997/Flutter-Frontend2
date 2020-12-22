@@ -1,11 +1,10 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:fypapp/components/custom_surfix_icon.dart';
 import 'package:fypapp/components/form_error.dart';
 import 'package:fypapp/constants.dart';
-import 'package:fypapp/screens/sign_in/sign_in_screen.dart';
+import 'package:fypapp/screens/forgot_password/resetPassword/reset_password_screen.dart';
 import 'package:fypapp/size_config.dart';
 import 'package:fypapp/components/default_button.dart';
 import 'package:http/http.dart' as http;
@@ -25,67 +24,29 @@ class _VerificationFormState extends State<VerificationForm> {
   List<String> errors = [];
   String token;
   bool _isLoading =false;
+  bool _tokenValidator = false;
 
-  verifyRegister(String token) async {
+  verifyPasswordReset(String token) async {
 
+    Map data = {
+      'token' : token,
+    };
     var jsonResponse = null;
-    var response = await http.post("http://192.168.8.126:8090/confirm_user",
-        body: jsonEncode(<String, String>{
-         'token':token,
-        }));
-
+    var response = await http.post("http://192.168.8.126:8090/confirm_change_password", body: data);
     if(response.statusCode == 200) {
       jsonResponse = json.decode(response.body);
-
-      var jsonString = jsonResponse['confirm_user'];
-      var jsonException = [];
-      jsonException = jsonResponse['exception_message'];
-
-      if(jsonString == "success") {
+      if(jsonResponse != null) {
         setState(() {
           _isLoading = false;
+          _tokenValidator = true;
         });
-
-        Fluttertoast.showToast(
-            msg: "You have successfully activated your account",
-            toastLength: Toast.LENGTH_LONG,
-            gravity: ToastGravity.BOTTOM,
-            backgroundColor: Colors.tealAccent,
-            textColor: Colors.black,
-            fontSize: 18.0);
-
-        Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (BuildContext context) => SignInScreen()), (Route<dynamic> route) => false);
-
-      }else if (jsonString == "fail") {
-        var jsonErrorMessage = [];
-        jsonErrorMessage = jsonResponse['errorMessage'];
-        if(jsonErrorMessage.length != 0){
-          String error = jsonErrorMessage[0];
-          if(error.contains("Wrong confirmation token")){
-            Fluttertoast.showToast(
-                msg: "You enter the wrong confirmation token",
-                toastLength: Toast.LENGTH_LONG,
-                gravity: ToastGravity.BOTTOM,
-                backgroundColor: Colors.tealAccent,
-                textColor: Colors.black,
-                fontSize: 18.0);
-            print("you have wrong token");
-          }
-        }
-        setState(() {
-          _isLoading = false;
-        });
-      }
-
-      if(jsonException.length != 0 ){
-        print(jsonException[0]);
-        print("you are in exception");
-        print(jsonResponse['errorMessage']);
+        Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (BuildContext context) => ResetPasswordScreen()), (Route<dynamic> route) => false);
       }
     }
     else {
       setState(() {
         _isLoading = false;
+        _tokenValidator = false;
       });
       print(response.body);
     }
@@ -118,11 +79,16 @@ class _VerificationFormState extends State<VerificationForm> {
             onChanged: (value) {
               if (value.isNotEmpty) {
                 removeError(error: kTokenNullError);
+              }else if(value.isNotEmpty && _tokenValidator == true){
+                removeError(error: kInvalidTokenError);
               }
             },
             validator: (value) {
-              if (value.isEmpty) {
+              if (_tokenValidator == false && value.isEmpty) {
                 addError(error: kTokenNullError);
+                return "";
+              } else if (value.isNotEmpty && _tokenValidator == false) {
+                addError(error: kInvalidTokenError);
                 return "";
               }
               return null;
@@ -146,12 +112,14 @@ class _VerificationFormState extends State<VerificationForm> {
             press: () {
               if (_formKey.currentState.validate()) {
                 _formKey.currentState.save();
+                final String token = tokenController.text;
 
-                  final String token = tokenController.text;
-                  setState(() {
+                setState(() {
                   _isLoading = true;
-                  });
-                  verifyRegister(token);
+                });
+
+                verifyPasswordReset(token);
+                // Navigator.pushNamed(context, LoginSuccessScreen.routeName);
 
                 // Do what you want to do
               }

@@ -1,8 +1,10 @@
 
 
+
 import 'package:flutter/material.dart';
 import 'package:fypapp/screens/extract/extractHomeScreen.dart';
 import 'package:fypapp/screens/forgot_password/forgot_password_screen.dart';
+import 'package:fypapp/screens/forgot_password/verifyToken/verify_screen.dart';
 import 'package:fypapp/screens/home/home_screen.dart';
 import 'package:fypapp/screens/login_success/login_success_screen.dart';
 import 'package:fypapp/screens/otp/otp_screen.dart';
@@ -21,4 +23,5 @@ final Map<String, WidgetBuilder> routes = {
   HomeScreen.routeName: (context) => HomeScreen(),
   UploadScreen.routeName: (context) => UploadScreen(),
   ExtractHomeScreen.routeName: (context) => ExtractHomeScreen(),
+  PasswordVerifyScreen.routeName: (context) => PasswordVerifyScreen(),
 };

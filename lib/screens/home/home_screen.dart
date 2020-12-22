@@ -1,7 +1,10 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fypapp/constants.dart';
 import 'package:fypapp/screens/extract/extractHomeScreen.dart';
+import 'package:fypapp/screens/sign_in/sign_in_screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'components/body.dart';
 
 
@@ -10,7 +13,25 @@ class HomeScreen extends StatefulWidget{
   _HomeScreenState createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen>{
+class _HomeScreenState extends State<HomeScreen> {
+
+  SharedPreferences sharedPreferences;
+
+  @override
+  void initState() {
+    super.initState();
+    checkLoginStatus();
+  }
+
+  checkLoginStatus() async {
+    sharedPreferences = await SharedPreferences.getInstance();
+    if (sharedPreferences.getString("token") == null) {
+      Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(
+          builder: (BuildContext context) => SignInScreen()), (
+          Route<dynamic> route) => false);
+    }
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -27,6 +48,17 @@ class _HomeScreenState extends State<HomeScreen>{
         ),
         centerTitle: true,
         automaticallyImplyLeading: false,
+        actions: <Widget>[
+          IconButton(
+              icon: SvgPicture.asset('assets/icons/Log out.svg'),
+              onPressed: () {
+                sharedPreferences.clear();
+                sharedPreferences.commit();
+                Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(
+                    builder: (BuildContext context) => SignInScreen()), (
+                    Route<dynamic> route) => false);
+              }),
+        ],
         bottom: PreferredSize(
           child: Container(
             color: Colors.lime,
@@ -52,7 +84,7 @@ class _HomeScreenState extends State<HomeScreen>{
         index: 1,
         onTap: (index) {
           setState(() {
-            if(index == 0){
+            if (index == 0) {
               Navigator.pushNamed(context, ExtractHomeScreen.routeName);
             }
           });
@@ -61,6 +93,7 @@ class _HomeScreenState extends State<HomeScreen>{
     );
   }
 }
+  
 
 // class HomeScreen extends StatelessWidget {
 //   static String routeName = "/home";
