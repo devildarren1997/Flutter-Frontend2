@@ -65,10 +65,16 @@ class Body extends StatelessWidget {
                                         borderRadius: BorderRadius.circular(18)),
                                       color: product.color,
                                       onPressed: (){
-                                        Navigator.pushNamed(context, UploadScreen.routeName);
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) => UploadScreen(
+                                                  product: product,
+                                                )
+                                            ));
                                       },
                                       child: Text(
-                                        "Embed  Image  Now".toUpperCase(),
+                                        "Embed  Text  Now".toUpperCase(),
                                         style: TextStyle(
                                           fontSize: 17,
                                           fontWeight: FontWeight.bold,

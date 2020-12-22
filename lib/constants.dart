@@ -35,7 +35,7 @@ const String kShortPassError = "Password is too short";
 const String kMatchPassError = "Passwords don't match";
 const String kNamelNullError = "Please Enter your name";
 const String kTokenNullError = "Please Enter the token";
-const String kInvalidTokenError = "Please Enter the correct token";
+const String kEmbedTextNullError = "Please Enter text you want to Embed";
 // const String kPhoneNumberNullError = "Please Enter your phone number";
 // const String kAddressNullError = "Please Enter your address";
 
