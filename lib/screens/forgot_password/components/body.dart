@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:fypapp/screens/forgot_password/verifyToken/verify_screen.dart';
 import 'package:fypapp/size_config.dart';
 import 'package:fypapp/constants.dart';
@@ -71,22 +72,78 @@ class _ForgotPassFormState extends State<ForgotPassForm> {
   }
 
   forgetPassword(String email) async {
-    Map data = {
-      'email': email,
-    };
+
     var jsonResponse = null;
-    var response = await http.post("http://192.168.8.126:8090/forget_password", body: data);
+    var response = await http.post("http://192.168.8.126:8090/forget_password",
+        body: jsonEncode(<String, String>{
+          'email': email,
+        }));
     if(response.statusCode == 200) {
+
       jsonResponse = json.decode(response.body);
-      print(jsonResponse);
-      if(jsonResponse != null) {
+      var jsonString = jsonResponse['forget_password'];
+      var jsonException = [];
+      jsonException = jsonResponse['exception_message'];
+
+      if(jsonString == "success") {
+
+        Fluttertoast.showToast(
+            msg: "A token is sent to your email",
+            toastLength: Toast.LENGTH_LONG,
+            gravity: ToastGravity.BOTTOM,
+            backgroundColor: Colors.tealAccent,
+            textColor: Colors.black,
+            fontSize: 18.0);
+
         setState(() {
           _isLoading = false;
         });
         Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context) => PasswordVerifyScreen()));
+      }else if(jsonString == "fail"){
+        var jsonErrorMessage = [];
+        jsonErrorMessage = jsonResponse['errorMessage'];
+        if(jsonErrorMessage.length != 0){
+          String error = jsonErrorMessage[0];
+          if(error.contains("email does not exist")){
+
+            Fluttertoast.showToast(
+                msg: "Email entered does not exist",
+                toastLength: Toast.LENGTH_LONG,
+                gravity: ToastGravity.BOTTOM,
+                backgroundColor: Colors.tealAccent,
+                textColor: Colors.black,
+                fontSize: 18.0);
+
+          }else if(error.contains("Something wrong")){
+            Fluttertoast.showToast(
+                msg: "Something went wrong with Email Server. Please contact us.",
+                toastLength: Toast.LENGTH_LONG,
+                gravity: ToastGravity.BOTTOM,
+                backgroundColor: Colors.tealAccent,
+                textColor: Colors.black,
+                fontSize: 18.0);
+          }
+        }
+        setState(() {
+          _isLoading = false;
+        });
+      }
+
+      if(jsonException.length != 0 ){
+        print(jsonException[0]);
+        Fluttertoast.showToast(
+            msg: "You are in exception",
+            toastLength: Toast.LENGTH_LONG,
+            gravity: ToastGravity.BOTTOM,
+            backgroundColor: Colors.tealAccent,
+            textColor: Colors.black,
+            fontSize: 18.0);
+        print("you are in exception");
+        print(jsonResponse['errorMessage']);
       }
     }
     else {
+      print("Status is not 200");
       setState(() {
         _isLoading = false;
       });

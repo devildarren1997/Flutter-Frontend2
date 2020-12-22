@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:fypapp/components/custom_surfix_icon.dart';
 import 'package:fypapp/components/form_error.dart';
 import 'package:fypapp/constants.dart';
@@ -24,30 +25,81 @@ class _VerificationFormState extends State<VerificationForm> {
   List<String> errors = [];
   String token;
   bool _isLoading =false;
-  bool _tokenValidator = false;
+
 
   verifyPasswordReset(String token) async {
 
-    Map data = {
-      'token' : token,
-    };
     var jsonResponse = null;
-    var response = await http.post("http://192.168.8.126:8090/confirm_change_password", body: data);
+    var response = await http.post("http://192.168.8.126:8090/confirm_change_password",
+        body: jsonEncode(<String, String>{
+      'token':token,
+    }));
+
+
     if(response.statusCode == 200) {
       jsonResponse = json.decode(response.body);
-      if(jsonResponse != null) {
+      var jsonString = jsonResponse['confirm_change_password'];
+      var jsonException = [];
+      jsonException = jsonResponse['exception_message'];
+
+      if (jsonString == "success") {
         setState(() {
           _isLoading = false;
-          _tokenValidator = true;
         });
-        Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (BuildContext context) => ResetPasswordScreen()), (Route<dynamic> route) => false);
+
+        Fluttertoast.showToast(
+            msg: "You are verified to change password",
+            toastLength: Toast.LENGTH_LONG,
+            gravity: ToastGravity.BOTTOM,
+            backgroundColor: Colors.tealAccent,
+            textColor: Colors.black,
+            fontSize: 18.0);
+
+        Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(
+            builder: (BuildContext context) => ResetPasswordScreen()), (
+            Route<dynamic> route) => false);
+
+      } else if (jsonString == "fail") {
+        var jsonErrorMessage = [];
+        jsonErrorMessage = jsonResponse['errorMessage'];
+        if (jsonErrorMessage.length != 0) {
+          String error = jsonErrorMessage[0];
+          if (error.contains("Wrong confirmation token")) {
+            Fluttertoast.showToast(
+                msg: "You enter the wrong confirmation token",
+                toastLength: Toast.LENGTH_LONG,
+                gravity: ToastGravity.BOTTOM,
+                backgroundColor: Colors.tealAccent,
+                textColor: Colors.black,
+                fontSize: 18.0);
+            print("you have wrong token");
+          }
+        }
+        setState(() {
+          _isLoading = false;
+        });
       }
+
+      if(jsonException.length != 0 ){
+        print(jsonException[0]);
+        Fluttertoast.showToast(
+            msg: "You are in exception",
+            toastLength: Toast.LENGTH_LONG,
+            gravity: ToastGravity.BOTTOM,
+            backgroundColor: Colors.tealAccent,
+            textColor: Colors.black,
+            fontSize: 18.0);
+        print("you are in exception");
+        print(jsonResponse['errorMessage']);
+      }
+
     }
     else {
       setState(() {
         _isLoading = false;
-        _tokenValidator = false;
+
       });
+      print("Status is not 200");
       print(response.body);
     }
   }
@@ -79,16 +131,11 @@ class _VerificationFormState extends State<VerificationForm> {
             onChanged: (value) {
               if (value.isNotEmpty) {
                 removeError(error: kTokenNullError);
-              }else if(value.isNotEmpty && _tokenValidator == true){
-                removeError(error: kInvalidTokenError);
               }
             },
             validator: (value) {
-              if (_tokenValidator == false && value.isEmpty) {
+              if (value.isEmpty) {
                 addError(error: kTokenNullError);
-                return "";
-              } else if (value.isNotEmpty && _tokenValidator == false) {
-                addError(error: kInvalidTokenError);
                 return "";
               }
               return null;

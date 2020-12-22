@@ -74,17 +74,17 @@ class _HomeScreenState extends State<HomeScreen> {
         buttonBackgroundColor: kIconColor,
         height: 50.0,
         items: <Widget>[
-          Icon(Icons.lock_outlined, size: 20.0, color: Colors.white),
           Icon(Icons.home_outlined, size: 20.0, color: Colors.white),
+          Icon(Icons.lock_outlined, size: 20.0, color: Colors.white),
         ],
         animationCurve: Curves.easeIn,
         animationDuration: Duration(
             milliseconds: 300
         ),
-        index: 1,
+        index: 0,
         onTap: (index) {
           setState(() {
-            if (index == 0) {
+            if (index == 1) {
               Navigator.pushNamed(context, ExtractHomeScreen.routeName);
             }
           });

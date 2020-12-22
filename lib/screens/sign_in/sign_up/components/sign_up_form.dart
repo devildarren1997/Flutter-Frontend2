@@ -60,6 +60,7 @@ String email, String password, String userName, BuildContext context) async {
               backgroundColor: Colors.tealAccent,
               textColor: Colors.black,
               fontSize: 16.0);
+          Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (BuildContext context) => OtpScreen()), (Route<dynamic> route) => false);
 
         }else if(error.contains("contact us")){
           Fluttertoast.showToast(
@@ -69,7 +70,8 @@ String email, String password, String userName, BuildContext context) async {
               backgroundColor: Colors.tealAccent,
               textColor: Colors.black,
               fontSize: 18.0);
-        }else if(error.contains("You have registered the account before")){
+
+        }else if(error.contains("Account registered.")){
           Fluttertoast.showToast(
               msg: "The account is registered before.",
               toastLength: Toast.LENGTH_LONG,

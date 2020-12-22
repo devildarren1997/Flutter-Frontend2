@@ -10,9 +10,7 @@ class PasswordVerifyScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     SizeConfig().init(context);
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Email Verification"),
-      ),
+      appBar: AppBar(),
       body: Body(),
     );
   }

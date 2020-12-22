@@ -35,17 +35,17 @@ class _ExtractHomeScreenState extends State<ExtractHomeScreen> {
         buttonBackgroundColor: kIconColor,
         height: 50.0,
         items: <Widget>[
-          Icon(Icons.lock_outlined, size: 20.0, color: Colors.white),
           Icon(Icons.home_outlined, size: 20.0, color: Colors.white),
+          Icon(Icons.lock_outlined, size: 20.0, color: Colors.white),
         ],
         animationCurve: Curves.easeIn,
         animationDuration: Duration(
             milliseconds: 300
         ),
-        index: 0,
+        index: 1,
         onTap: (index) {
           setState(() {
-            if(index == 1){
+            if(index == 0){
               Navigator.pushNamed(context, HomeScreen.routeName);
             }
           });

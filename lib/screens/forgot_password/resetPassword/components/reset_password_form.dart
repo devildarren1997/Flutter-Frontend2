@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:fypapp/screens/sign_in/sign_in_screen.dart';
 import 'package:fypapp/size_config.dart';
 import 'package:fypapp/components/custom_surfix_icon.dart';
@@ -26,24 +27,83 @@ class _ResetPasswordFormState extends State<ResetPasswordForm> {
 
   confirmChangePassword(String password) async {
 
-    Map data = {
-      'password' : password,
-    };
+
     var jsonResponse = null;
-    var response = await http.post("http://192.168.8.126:8090/change_password", body: data);
+    var response = await http.post("http://192.168.8.126:8090/change_password",
+        body: jsonEncode(<String, String>{
+      'password':password,
+    }));
+
     if(response.statusCode == 200) {
       jsonResponse = json.decode(response.body);
-      if(jsonResponse != null) {
+
+      var jsonString = jsonResponse['change_password'];
+      var jsonException = [];
+      jsonException = jsonResponse['exception_message'];
+
+      if(jsonString == "success") {
         setState(() {
           _isLoading = false;
         });
+
+        Fluttertoast.showToast(
+            msg: "You have successfully changed the password",
+            toastLength: Toast.LENGTH_LONG,
+            gravity: ToastGravity.BOTTOM,
+            backgroundColor: Colors.tealAccent,
+            textColor: Colors.black,
+            fontSize: 18.0);
+
         Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (BuildContext context) => SignInScreen()), (Route<dynamic> route) => false);
       }
-    }
-    else {
+      else if(jsonString == "fail"){
+        var jsonErrorMessage = [];
+        jsonErrorMessage = jsonResponse['errorMessage'];
+        if(jsonErrorMessage.length != 0){
+          String error = jsonErrorMessage[0];
+          if(error.contains("same as old password")){
+
+            Fluttertoast.showToast(
+                msg: "The new password is similar to old password.\nPlease enter again",
+                toastLength: Toast.LENGTH_LONG,
+                gravity: ToastGravity.BOTTOM,
+                backgroundColor: Colors.tealAccent,
+                textColor: Colors.black,
+                fontSize: 18.0);
+
+          }else if(error.contains("Something wrong")){
+            Fluttertoast.showToast(
+                msg: "Something went wrong with database.\nPlease contact us",
+                toastLength: Toast.LENGTH_LONG,
+                gravity: ToastGravity.BOTTOM,
+                backgroundColor: Colors.tealAccent,
+                textColor: Colors.black,
+                fontSize: 18.0);
+          }
+        }
+        setState(() {
+          _isLoading = false;
+        });
+      }
+
+      if(jsonException.length != 0 ){
+        print(jsonException[0]);
+        Fluttertoast.showToast(
+            msg: "You are in exception",
+            toastLength: Toast.LENGTH_LONG,
+            gravity: ToastGravity.BOTTOM,
+            backgroundColor: Colors.tealAccent,
+            textColor: Colors.black,
+            fontSize: 18.0);
+        print("you are in exception");
+        print(jsonResponse['errorMessage']);
+      }
+
+    } else {
       setState(() {
         _isLoading = false;
       });
+      print("Status is not 200");
       print(response.body);
     }
   }
