@@ -32,7 +32,7 @@ List<Product> products = [
       designer: "Gong Chenyue",
       description: dummyText,
       image: 'assets/images/catImage.jpg',
-      color: Color(0xff56422A)),
+      color: Color(0xFF979797)),
   Product(
       id: 2,
       filter: "pencil",

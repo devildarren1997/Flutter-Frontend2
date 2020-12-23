@@ -77,29 +77,17 @@ class _BodyState extends State<Body> {
       else if (jsonString == "f") {
         var jsonErrorMessage = [];
         jsonErrorMessage = jsonResponse['error'];
-        print(jsonErrorMessage);
         if(jsonErrorMessage.length != 0){
-          String error = jsonErrorMessage[0];
-          if(error.contains("Wrong email")){
 
             Fluttertoast.showToast(
-                msg: "You enter wrong email or password",
+                msg: jsonErrorMessage[0],
                 toastLength: Toast.LENGTH_LONG,
                 gravity: ToastGravity.BOTTOM,
                 backgroundColor: Colors.tealAccent,
                 textColor: Colors.black,
                 fontSize: 18.0);
 
-          }else if(error.contains("Account has not")){
 
-            Fluttertoast.showToast(
-                msg: "You have not activate your account",
-                toastLength: Toast.LENGTH_LONG,
-                gravity: ToastGravity.BOTTOM,
-                backgroundColor: Colors.tealAccent,
-                textColor: Colors.black,
-                fontSize: 18.0);
-          }
         }
         setState(() {
           _isLoading = false;
@@ -362,7 +350,7 @@ class _BodyState extends State<Body> {
                                           final bytes = await imageFile.readAsBytesSync();
                                           String image64 = base64Encode(bytes);
                                           String filterName = widget.product.filter;
-
+                                          globals.productId = widget.product.id;
                                           setState(() {
                                             _isLoading = true;
                                           });

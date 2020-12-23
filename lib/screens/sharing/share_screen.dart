@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-
 import 'components/body.dart';
-import 'package:fypapp/screens/home/home_screen.dart';
 
-class ReviewScreen extends StatelessWidget {
+
+class ShareScreen extends StatelessWidget {
+
   final String jsonImage;
 
-  const ReviewScreen(this.jsonImage, {Key key}): super(key: key);
+  const ShareScreen(this.jsonImage, {Key key}): super(key: key);
 
   @override
   Widget build(BuildContext context) {
