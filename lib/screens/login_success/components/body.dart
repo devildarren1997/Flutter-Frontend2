@@ -4,6 +4,8 @@ import 'package:fypapp/components/default_button.dart';
 import 'package:fypapp/screens/home/home_screen.dart';
 
 class Body extends StatelessWidget {
+
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -40,7 +42,8 @@ class Body extends StatelessWidget {
               child: DefaultButton(
                 text: "Back to home",
                 press: () {
-                  Navigator.pushNamed(context, HomeScreen.routeName);
+                  Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
+                      builder: (BuildContext context) => HomeScreen()), (route) => false);
                 },
               ),
             ),

@@ -8,6 +8,7 @@ import 'item_card.dart';
 
 class Body extends StatelessWidget{
 
+
   Widget build(BuildContext context){
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -41,4 +42,5 @@ class Body extends StatelessWidget{
       ],
     );
   }
+
 }

@@ -10,6 +10,7 @@ import 'components/body.dart';
 
 class HomeScreen extends StatefulWidget{
   static String routeName = "/home";
+
   _HomeScreenState createState() => _HomeScreenState();
 }
 
@@ -85,7 +86,8 @@ class _HomeScreenState extends State<HomeScreen> {
         onTap: (index) {
           setState(() {
             if (index == 1) {
-              Navigator.pushNamed(context, ExtractHomeScreen.routeName);
+              Navigator.push(context, MaterialPageRoute(
+                  builder: (BuildContext context) => ExtractHomeScreen()));
             }
           });
         },

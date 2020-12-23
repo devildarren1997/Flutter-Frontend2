@@ -8,8 +8,10 @@ import 'package:fypapp/components/custom_surfix_icon.dart';
 import 'package:fypapp/components/form_error.dart';
 import 'package:fypapp/constants.dart';
 import 'package:fypapp/screens/home/components/Product.dart';
+import 'package:fypapp/screens/review/review_screen.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:http/http.dart' as http;
+import 'package:fypapp/global.dart' as globals;
 import '../../../size_config.dart';
 
 class Body extends StatefulWidget {
@@ -26,6 +28,7 @@ class _BodyState extends State<Body> {
   final TextEditingController embedTextController = TextEditingController();
   final TextEditingController secondaryTextController = TextEditingController();
   String embedText;
+  int userId = globals.userId;
   String secondaryPassword;
   File imageFile;
   bool _isLoading =false;
@@ -33,86 +36,97 @@ class _BodyState extends State<Body> {
   final _formKey = GlobalKey<FormState>();
 
 
-  // embedImage(String text, password, image, id) async {
-  //
-  //   var jsonResponse = null;
-  //   var response = await http.post("http://192.168.8.126:8090/sign_in",
-  //       headers: <String, String>{"Content-Type":"application/json"},
-  //       body: jsonEncode(<String, String>{
-  //         'id': id,
-  //         'embedText': text,
-  //         'secondaryPassword': password,
-  //         'image': image,
-  //       }));
-  //
-  //   if(response.statusCode == 200) {
-  //     jsonResponse = json.decode(response.body);
-  //
-  //     var jsonString = jsonResponse['embed_image'];
-  //     var jsonException = [];
-  //     jsonException = jsonResponse['exception_message'];
-  //
-  //     if (jsonString == "success") {
-  //       setState(() {
-  //         _isLoading = false;
-  //       });
-  //
-  //       // Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(
-  //       //     builder: (BuildContext context) => LoginSuccessScreen()), (
-  //       //     Route<dynamic> route) => false);
-  //     }
-  //     else if (jsonString == "fail") {
-  //       var jsonErrorMessage = [];
-  //       jsonErrorMessage = jsonResponse['errorMessage'];
-  //       if(jsonErrorMessage.length != 0){
-  //         String error = jsonErrorMessage[0];
-  //         if(error.contains("Wrong email")){
-  //
-  //           Fluttertoast.showToast(
-  //               msg: "You enter wrong email or password",
-  //               toastLength: Toast.LENGTH_LONG,
-  //               gravity: ToastGravity.BOTTOM,
-  //               backgroundColor: Colors.tealAccent,
-  //               textColor: Colors.black,
-  //               fontSize: 18.0);
-  //
-  //         }else if(error.contains("Account has not")){
-  //
-  //           Fluttertoast.showToast(
-  //               msg: "You have not activate your account",
-  //               toastLength: Toast.LENGTH_LONG,
-  //               gravity: ToastGravity.BOTTOM,
-  //               backgroundColor: Colors.tealAccent,
-  //               textColor: Colors.black,
-  //               fontSize: 18.0);
-  //         }
-  //       }
-  //       setState(() {
-  //         _isLoading = false;
-  //       });
-  //     }
-  //
-  //     if(jsonException.length != 0 ){
-  //       print(jsonException[0]);
-  //       Fluttertoast.showToast(
-  //           msg: "You are in exception",
-  //           toastLength: Toast.LENGTH_LONG,
-  //           gravity: ToastGravity.BOTTOM,
-  //           backgroundColor: Colors.tealAccent,
-  //           textColor: Colors.black,
-  //           fontSize: 18.0);
-  //       print("you are in exception");
-  //       print(jsonResponse['errorMessage']);
-  //     }
-  //
-  //   }else {
-  //     print("Status is not 200");
-  //     setState(() {
-  //       _isLoading = false;
-  //     });
-  //     print(response.body);
-  //   }
-  // }
+  embedImage(String text, password, image, filterName,imageName, int userId) async {
+
+    var jsonResponse = null;
+    var response = await http.post("http://192.168.8.126:8090/getTempEmbeddedImage",
+        body: jsonEncode(<String, dynamic>{
+          'userId': userId,
+          'filter': filterName,
+          'name': imageName,
+          'embedText': text,
+          'secondaryPassword': password,
+          'imageBase64': image,
+        }));
+
+    if(response.statusCode == 200) {
+      jsonResponse = json.decode(response.body);
+
+      var jsonString = jsonResponse['status'];
+      var jsonImage = jsonResponse['embeddedImage'];
+      var jsonException = [];
+      jsonException = jsonResponse['exception'];
+
+      if (jsonString == "s") {
+        setState(() {
+          _isLoading = false;
+        });
+
+        Fluttertoast.showToast(
+            msg: "You can review your image",
+            toastLength: Toast.LENGTH_LONG,
+            gravity: ToastGravity.BOTTOM,
+            backgroundColor: Colors.tealAccent,
+            textColor: Colors.black,
+            fontSize: 16.0);
+
+        Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(
+            builder: (BuildContext context) => ReviewScreen(jsonImage)), (
+            Route<dynamic> route) => false);
+      }
+      else if (jsonString == "f") {
+        var jsonErrorMessage = [];
+        jsonErrorMessage = jsonResponse['error'];
+        print(jsonErrorMessage);
+        if(jsonErrorMessage.length != 0){
+          String error = jsonErrorMessage[0];
+          if(error.contains("Wrong email")){
+
+            Fluttertoast.showToast(
+                msg: "You enter wrong email or password",
+                toastLength: Toast.LENGTH_LONG,
+                gravity: ToastGravity.BOTTOM,
+                backgroundColor: Colors.tealAccent,
+                textColor: Colors.black,
+                fontSize: 18.0);
+
+          }else if(error.contains("Account has not")){
+
+            Fluttertoast.showToast(
+                msg: "You have not activate your account",
+                toastLength: Toast.LENGTH_LONG,
+                gravity: ToastGravity.BOTTOM,
+                backgroundColor: Colors.tealAccent,
+                textColor: Colors.black,
+                fontSize: 18.0);
+          }
+        }
+        setState(() {
+          _isLoading = false;
+        });
+      }
+
+      if(jsonException.length != 0){
+        print(jsonException[0]);
+        Fluttertoast.showToast(
+            msg: jsonException[0],
+            toastLength: Toast.LENGTH_LONG,
+            gravity: ToastGravity.BOTTOM,
+            backgroundColor: Colors.tealAccent,
+            textColor: Colors.black,
+            fontSize: 18.0);
+        print("you are in exception");
+
+      }
+
+    }else {
+      print("Status is not 200");
+      setState(() {
+        _isLoading = false;
+      });
+      print(response.body);
+    }
+  }
 
   Widget _displayImageView(){
     if(imageFile == null){
@@ -343,13 +357,17 @@ class _BodyState extends State<Body> {
                                               textColor: Colors.black,
                                               fontSize: 16.0);
                                         }else{
+                                          String imagePath = imageFile.path.split('/').last;
+                                          String imageName = imagePath.split('.').first;
                                           final bytes = await imageFile.readAsBytesSync();
                                           String image64 = base64Encode(bytes);
-                                          String effectId = widget.product.id.toString();
-                                          print(effectId);
-                                          print("hello darren");
-                                          print(image64);
-                                          // embedImage(textToEmbed, passwordSecondary, image64, id);
+                                          String filterName = widget.product.filter;
+
+                                          setState(() {
+                                            _isLoading = true;
+                                          });
+
+                                          embedImage(textToEmbed, passwordSecondary, image64, filterName, imageName, userId);
                                         }
 
                                       }

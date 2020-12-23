@@ -10,6 +10,7 @@ import 'package:fypapp/screens/forgot_password/forgot_password_screen.dart';
 import 'package:fypapp/screens/login_success/login_success_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:fypapp/global.dart' as globals;
 import 'package:http/http.dart' as http;
 
 
@@ -27,6 +28,7 @@ class _SignFormState extends State<SignForm> {
   String email;
   String password;
   bool remember = false;
+  var jsonUserId = null;
   bool _isLoading =false;
   final List<String> errors = [];
 
@@ -62,6 +64,7 @@ class _SignFormState extends State<SignForm> {
       var jsonString = jsonResponse['sign_in'];
       var jsonException = [];
       jsonException = jsonResponse['exception_message'];
+      jsonUserId = jsonResponse['id'];
 
       if (jsonString == "success") {
         setState(() {
@@ -69,7 +72,7 @@ class _SignFormState extends State<SignForm> {
         });
         sharedPreferences.setString("token", jsonResponse['token']);
         Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(
-            builder: (BuildContext context) => LoginSuccessScreen()), (
+            builder: (BuildContext context) => LoginSuccessScreen(jsonUserId)), (
             Route<dynamic> route) => false);
       }
       else if (jsonString == "fail") {
