@@ -57,18 +57,24 @@ class _BodyState extends State<Body> {
           _isLoading = false;
         });
 
-        Fluttertoast.showToast(
-            msg: "This is the extract message",
-            toastLength: Toast.LENGTH_LONG,
-            gravity: ToastGravity.BOTTOM,
-            backgroundColor: Colors.tealAccent,
-            textColor: Colors.black,
-            fontSize: 16.0);
-
         extractedText = jsonExtractedMessage;
         if(extractedText.length > 0){
+          Fluttertoast.showToast(
+              msg: "This is the extract message",
+              toastLength: Toast.LENGTH_LONG,
+              gravity: ToastGravity.BOTTOM,
+              backgroundColor: Colors.tealAccent,
+              textColor: Colors.black,
+              fontSize: 16.0);
         _showExtractDialog(context);
         }else{
+          Fluttertoast.showToast(
+              msg: "No message found",
+              toastLength: Toast.LENGTH_LONG,
+              gravity: ToastGravity.BOTTOM,
+              backgroundColor: Colors.tealAccent,
+              textColor: Colors.black,
+              fontSize: 16.0);
           extractedText = "We couldn't find message embedded in the image.\nPlease input the correct image";
           _showExtractDialog(context);
         }
@@ -273,11 +279,11 @@ class _BodyState extends State<Body> {
       maxLength: 20,
       maxLengthEnforced: true,
       decoration: InputDecoration(
-        hintStyle: TextStyle(color: kTextColor, fontSize: 12.5),
+        hintStyle: TextStyle(color: kTextColor, fontSize: 12),
         labelStyle: TextStyle(color: kTextColor, fontSize: 23),
         counterStyle: TextStyle(color: kTextColor),
         labelText: "Secondary Password",
-        hintText: "Enter secondary password set (left empty if no)",
+        hintText: "Enter secondary password (left empty if none)",
         // If  you are using latest version of flutter then lable text and hint text shown like this
         // if you r using flutter less then 1.20.* then maybe this is not working properly
         floatingLabelBehavior: FloatingLabelBehavior.always,
