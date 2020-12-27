@@ -299,7 +299,7 @@ class _BodyState extends State<Body> {
 
     var jsonResponse = null;
     var response = await http.get("http://192.168.8.126:8090/confirmEmbeddedImage/"+userId.toString());
-    print("this is the status code "+ response.statusCode.toString());
+
     if(response.statusCode == 200) {
       jsonResponse = json.decode(response.body);
 

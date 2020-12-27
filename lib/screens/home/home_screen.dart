@@ -2,7 +2,7 @@ import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fypapp/constants.dart';
-import 'package:fypapp/screens/extract/extractHomeScreen.dart';
+import 'package:fypapp/screens/extract_home/extract_home_screen.dart';
 import 'package:fypapp/screens/sign_in/sign_in_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'components/body.dart';
@@ -76,7 +76,7 @@ class _HomeScreenState extends State<HomeScreen> {
         height: 50.0,
         items: <Widget>[
           Icon(Icons.home_outlined, size: 20.0, color: Colors.white),
-          Icon(Icons.lock_outlined, size: 20.0, color: Colors.white),
+          Icon(Icons.lock_open_outlined, size: 20.0, color: Colors.white),
         ],
         animationCurve: Curves.easeIn,
         animationDuration: Duration(

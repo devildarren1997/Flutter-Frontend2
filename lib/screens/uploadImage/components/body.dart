@@ -174,6 +174,7 @@ class _BodyState extends State<Body> {
     var image = await ImagePicker.pickImage(source: ImageSource.gallery);
     this.setState(() {
       imageFile = image;
+      globals.imagePath = image.path;
     });
     Navigator.of(context).pop();
   }
@@ -182,6 +183,7 @@ class _BodyState extends State<Body> {
     var image = await ImagePicker.pickImage(source: ImageSource.camera);
     this.setState(() {
       imageFile = image;
+      globals.imagePath = image.path;
     });
     Navigator.of(context).pop();
   }
@@ -306,7 +308,7 @@ class _BodyState extends State<Body> {
             padding:
             EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(10)),
             child: SingleChildScrollView(
-              child:  Column(
+              child:  _isLoading ? Center(child: CircularProgressIndicator()): Column(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: <Widget>[
                     SizedBox(height: SizeConfig.screenHeight * 0.04),

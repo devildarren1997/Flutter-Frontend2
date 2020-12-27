@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:fypapp/constants.dart';
 import 'package:fypapp/size_config.dart';
 import 'package:fypapp/screens/sign_in/components/sign_form.dart';
-import 'package:fypapp/components/no_account_text.dart';
+
 
 class Body extends StatelessWidget {
   @override
@@ -31,9 +31,6 @@ class Body extends StatelessWidget {
                 ),
                 SizedBox(height: SizeConfig.screenHeight * 0.08),
                 SignForm(),
-                SizedBox(height: SizeConfig.screenHeight * 0.08),
-                SizedBox(height: getProportionateScreenHeight(20)),
-                NoAccountText(),
               ],
             ),
           ),

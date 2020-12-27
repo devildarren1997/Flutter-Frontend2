@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:fypapp/components/no_account_text.dart';
 import 'package:fypapp/size_config.dart';
 import 'package:fypapp/constants.dart';
 import 'package:fypapp/components/custom_surfix_icon.dart';
@@ -132,7 +133,7 @@ class _SignFormState extends State<SignForm> {
 
   @override
   Widget build(BuildContext context) {
-    return Form(
+    return  Form(
       key: _formKey,
       child: _isLoading ? Center(child: CircularProgressIndicator()):Column(
         children: [
@@ -188,6 +189,9 @@ class _SignFormState extends State<SignForm> {
               }
             },
           ),
+          SizedBox(height: SizeConfig.screenHeight * 0.08),
+          SizedBox(height: getProportionateScreenHeight(20)),
+          NoAccountText(),
         ],
       ),
     );

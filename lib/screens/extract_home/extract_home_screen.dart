@@ -1,5 +1,5 @@
-import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:fypapp/screens/home/home_screen.dart';
 
 import '../../constants.dart';
@@ -20,7 +20,7 @@ class _ExtractHomeScreenState extends State<ExtractHomeScreen> {
         automaticallyImplyLeading: false,
         elevation: 2,
         title: Text(
-          'Extract Image',
+          'Extract Home',
           style: TextStyle(
             fontWeight: FontWeight.bold,
             fontFamily: 'Muli',
@@ -37,7 +37,7 @@ class _ExtractHomeScreenState extends State<ExtractHomeScreen> {
         height: 50.0,
         items: <Widget>[
           Icon(Icons.home_outlined, size: 20.0, color: Colors.white),
-          Icon(Icons.lock_outlined, size: 20.0, color: Colors.white),
+          Icon(Icons.lock_open_outlined, size: 20.0, color: Colors.white),
         ],
         animationCurve: Curves.easeIn,
         animationDuration: Duration(
