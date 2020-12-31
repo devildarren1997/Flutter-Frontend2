@@ -80,17 +80,16 @@ class _VerificationFormState extends State<VerificationForm> {
         });
       }
 
-      if(jsonException.length != 0 ){
+      if(jsonException.length != 0){
         print(jsonException[0]);
         Fluttertoast.showToast(
-            msg: "You are in exception",
+            msg: jsonException[0],
             toastLength: Toast.LENGTH_LONG,
             gravity: ToastGravity.BOTTOM,
             backgroundColor: Colors.tealAccent,
             textColor: Colors.black,
             fontSize: 18.0);
         print("you are in exception");
-        print(jsonResponse['errorMessage']);
       }
 
     }
