@@ -15,12 +15,12 @@ class _BodyState extends State<Body> {
   List<Map<String, String>> splashData = [
     {
       "text": "Welcome to MarkEmb, Let's embed your image!",
-      "image": "assets/images/splash1darren.jpg"
+      "lottie": "assets/lottie/hello.json"
     },
     {
       "text":
       "We show the easy way to embed & extract.",
-      "image": "assets/images/splash2darren.png"
+      "lottie": "assets/lottie/fast.json"
     }
 
   ];
@@ -41,7 +41,7 @@ class _BodyState extends State<Body> {
                 },
                 itemCount: splashData.length,
                 itemBuilder: (context, index) => SplashContent(
-                  image: splashData[index]["image"],
+                  lottie: splashData[index]["lottie"],
                   text: splashData[index]['text'],
                 ),
               ),

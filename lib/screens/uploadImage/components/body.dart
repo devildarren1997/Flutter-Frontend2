@@ -308,9 +308,9 @@ class _BodyState extends State<Body> {
             padding:
             EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(10)),
             child: SingleChildScrollView(
-              child:  _isLoading ? Center(child: CircularProgressIndicator()): Column(
+              child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: <Widget>[
+                  children:  <Widget>[
                     SizedBox(height: SizeConfig.screenHeight * 0.04),
                     _displayImageView(),
                     SizedBox(height: SizeConfig.screenHeight * 0.03),
@@ -386,3 +386,5 @@ class _BodyState extends State<Body> {
     );
   }
 }
+
+// _isLoading ? Center(child: CircularProgressIndicator()):

@@ -29,9 +29,6 @@ class _BodyState extends State<Body> {
   bool _isLoading = false;
 
   void share(BuildContext context) async {
-    setState(() {
-      _isLoading = true;
-    });
 
     final RenderBox box = context.findRenderObject();
     final decodedBytes = base64Decode(widget.jsonImage);
@@ -40,15 +37,12 @@ class _BodyState extends State<Body> {
 
     await file.writeAsBytesSync(decodedBytes);
 
-    Share.shareFile(file,
+    await Share.shareFile(file,
       subject: "This is the embedded Image",
       text: "Hello, you image has been embedded!",
         sharePositionOrigin: box.localToGlobal(Offset.zero) & box.size
     );
 
-    setState(() {
-      _isLoading = false;
-    });
 
   }
 
@@ -188,35 +182,36 @@ class _BodyState extends State<Body> {
         child: Padding(
           padding:
           EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(10)),
-          child: SingleChildScrollView(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: <Widget>[
-                SizedBox(height: SizeConfig.screenHeight * 0.02),
-                Text(
-                  "You have done embedding",
-                  style: TextStyle(
-                    fontSize: 16,
-                    color: Colors.white,
-                  ),
+            child: SingleChildScrollView(
+              child:
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: <Widget>[
+                    SizedBox(height: SizeConfig.screenHeight * 0.02),
+                    Text(
+                      "You have done embedding",
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: Colors.white,
+                      ),
+                    ),
+                    Text(
+                    "Share Save OR Return to Home",
+                      style: TextStyle(
+                        fontSize: 20,
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    SizedBox(height: SizeConfig.screenHeight * 0.03),
+                    _displayImageView(),
+                    _circularShareButton(),
+                    SizedBox(height: SizeConfig.screenHeight * 0.005),
+                    _HomeButton(),
+                    SizedBox(height: SizeConfig.screenHeight * 0.04),
+                  ],
                 ),
-                Text(
-                "Share Save OR Return to Home",
-                  style: TextStyle(
-                    fontSize: 20,
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                SizedBox(height: SizeConfig.screenHeight * 0.03),
-                _displayImageView(),
-                _circularShareButton(),
-                SizedBox(height: SizeConfig.screenHeight * 0.005),
-                _HomeButton(),
-                SizedBox(height: SizeConfig.screenHeight * 0.04),
-              ],
             ),
-          ),
         ),
       ),
     );
