@@ -58,7 +58,7 @@ class _BodyState extends State<Body> {
         });
 
         extractedText = jsonExtractedMessage;
-        if(extractedText.length > 0){
+        if(extractedText != null){
           Fluttertoast.showToast(
               msg: "This is the extract message",
               toastLength: Toast.LENGTH_LONG,
@@ -210,6 +210,7 @@ class _BodyState extends State<Body> {
 
   _openGallery(BuildContext context) async {
     var image = await ImagePicker.pickImage(source: ImageSource.gallery);
+    print(image.path);
     this.setState(() {
       extractImageFile = image;
     });

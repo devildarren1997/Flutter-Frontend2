@@ -14,7 +14,7 @@ class ShareScreen extends StatelessWidget {
       appBar: AppBar(
         elevation: 2,
         title: Text(
-          'Access Image',
+          'Share Image',
           style: TextStyle(
             fontWeight: FontWeight.bold,
             fontFamily: 'Muli',

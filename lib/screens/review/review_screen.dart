@@ -14,7 +14,7 @@ class ReviewScreen extends StatelessWidget {
       appBar: AppBar(
         elevation: 2,
         title: Text(
-          'Access Image',
+          'Review Image',
           style: TextStyle(
             fontWeight: FontWeight.bold,
             fontFamily: 'Muli',
