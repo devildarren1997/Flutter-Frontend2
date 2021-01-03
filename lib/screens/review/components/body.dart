@@ -188,7 +188,7 @@ class _BodyState extends State<Body> {
   refreshImage(int userId) async {
 
     var jsonResponse = null;
-    var response = await http.put("http://192.168.8.126:8090/refresh/"+userId.toString());
+    var response = await http.put("http://embeddingsystem.us-east-2.elasticbeanstalk.com/refresh/"+userId.toString());
 
     if(response.statusCode == 200) {
       jsonResponse = json.decode(response.body);
@@ -224,7 +224,7 @@ class _BodyState extends State<Body> {
   cancelImage(int userId) async {
 
     var jsonResponse = null;
-    var response = await http.delete("http://192.168.8.126:8090/cancelTempEmbedding/"+userId.toString());
+    var response = await http.delete("http://embeddingsystem.us-east-2.elasticbeanstalk.com/cancelTempEmbedding/"+userId.toString());
 
     if(response.statusCode == 200) {
       jsonResponse = json.decode(response.body);
@@ -298,7 +298,7 @@ class _BodyState extends State<Body> {
   confirmImage(int userId) async {
 
     var jsonResponse = null;
-    var response = await http.get("http://192.168.8.126:8090/confirmEmbeddedImage/"+userId.toString());
+    var response = await http.get("http://embeddingsystem.us-east-2.elasticbeanstalk.com/confirmEmbeddedImage/"+userId.toString());
 
     if(response.statusCode == 200) {
       jsonResponse = json.decode(response.body);

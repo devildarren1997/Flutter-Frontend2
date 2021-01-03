@@ -74,7 +74,7 @@ class _ForgotPassFormState extends State<ForgotPassForm> {
   forgetPassword(String email) async {
 
     var jsonResponse = null;
-    var response = await http.post("http://192.168.8.126:8090/forget_password",
+    var response = await http.post("http://embeddingsystem.us-east-2.elasticbeanstalk.com/forget_password",
         body: jsonEncode(<String, String>{
           'email': email,
         }));

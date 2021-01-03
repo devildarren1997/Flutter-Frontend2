@@ -54,8 +54,8 @@ class _BodyState extends State<Body> {
     final decodedBytes = base64Decode(widget.jsonImage);
     String imagePath = globals.imagePath.split('/').last;
     String imageName = imagePath.split('.').first;
-    final String path = ("/storage/emulated/0/Pictures");
-    File imageFile = new File("$path/Embedded/$imageName.png");
+    final String path = ("/Pictures");
+    File imageFile = new File("$path/MarkEmb/$imageName.png");
     imageFile.createSync(recursive: true);
     imageFile.writeAsBytesSync(decodedBytes, flush: true);
 

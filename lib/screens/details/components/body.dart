@@ -105,7 +105,7 @@ class Body extends StatelessWidget {
                             children: <Widget>[
                               Ink.image(
                                 image: AssetImage(
-                                  'assets/images/catImage.jpg'
+                                  product.image,
                                 ),
                                 height: 300,
                                 fit: BoxFit.cover,
@@ -115,8 +115,8 @@ class Body extends StatelessWidget {
                               ),
                               
                               Positioned(
-                                bottom: 20,
-                                right: 16,
+                                bottom: 5,
+                                right: 10,
                                 left: 16,
                                 child: Row(
                                   children: <Widget>[
@@ -124,12 +124,12 @@ class Body extends StatelessWidget {
                                     text: TextSpan(
                                       children: [
                                         TextSpan(text: "Designer\n", style: TextStyle(
-                                          color: kTextColor, fontSize: 20,
+                                          color: product.textColor, fontSize: 20,
                                         )),
                                         TextSpan(
                                           text: "${product.designer}",
                                           style: Theme.of(context).textTheme.headline4.copyWith(
-                                              color: kTextColor, fontWeight: FontWeight.bold, fontFamily: 'Muli'
+                                              color: product.textColor, fontWeight: FontWeight.bold, fontFamily: 'Muli'
                                           ),
                                         ),
                                       ],

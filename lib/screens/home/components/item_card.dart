@@ -27,7 +27,7 @@ class ItemCard extends StatelessWidget {
             image: AssetImage(
               product.image,
             ),
-            colorFilter: ColorFilters.greyscale,
+            colorFilter: ColorFilter.mode(Colors.white30, BlendMode.exclusion),
             height: 240,
             fit: BoxFit.cover,
             child: InkWell(

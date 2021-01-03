@@ -29,7 +29,7 @@ class _ResetPasswordFormState extends State<ResetPasswordForm> {
 
 
     var jsonResponse = null;
-    var response = await http.post("http://192.168.8.126:8090/change_password",
+    var response = await http.post("http://embeddingsystem.us-east-2.elasticbeanstalk.com/change_password",
         body: jsonEncode(<String, String>{
       'password':password,
     }));

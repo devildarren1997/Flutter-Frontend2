@@ -19,7 +19,7 @@ class SignUpForm extends StatefulWidget {
 Future<UserModel> registerUser(
 String email, String password, String userName, BuildContext context) async {
 
-  var Url = "http://192.168.8.126:8090/sign_up";
+  var Url = "http://embeddingsystem.us-east-2.elasticbeanstalk.com/sign_up";
   var jsonResponse = null;
   var response = await http.post(Url,
   headers:<String, String>{"Content-Type":"application/json"},
@@ -54,7 +54,7 @@ String email, String password, String userName, BuildContext context) async {
         String error = jsonErrorMessage[0];
         if(error.contains("You have registered the account before. Please go to")){
           Fluttertoast.showToast(
-              msg: "You have registered the account.\n Please go to your email to activate the account.",
+              msg: "You have registered the account but never activate yet.\n Please check your email for activation token.",
               toastLength: Toast.LENGTH_LONG,
               gravity: ToastGravity.BOTTOM,
               backgroundColor: Colors.tealAccent,

@@ -36,7 +36,7 @@ class _BodyState extends State<Body> {
   extractImage(String image, password, filterName, int userId) async {
 
     var jsonResponse = null;
-    var response = await http.post("http://192.168.8.126:8090/extractFromImage",
+    var response = await http.post("http://embeddingsystem.us-east-2.elasticbeanstalk.com/extractFromImage",
         body: jsonEncode(<String, dynamic>{
           'userId': userId,
           'filter': filterName,
@@ -83,14 +83,31 @@ class _BodyState extends State<Body> {
         var jsonErrorMessage = [];
         jsonErrorMessage = jsonResponse['error'];
         if(jsonErrorMessage.length != 0){
+          if(jsonErrorMessage[0].toString().contains("102")){
+            Fluttertoast.showToast(
+                msg: jsonErrorMessage[0],
+                toastLength: Toast.LENGTH_LONG,
+                gravity: ToastGravity.BOTTOM,
+                backgroundColor: Colors.tealAccent,
+                textColor: Colors.black,
+                fontSize: 16.0);
+            extractedText = "We have failed to extract the complete binary bit embedded to the Image.";
+            _showExtractDialog(context);
+          }
+          else{
+            Fluttertoast.showToast(
+                msg: jsonErrorMessage[0],
+                toastLength: Toast.LENGTH_LONG,
+                gravity: ToastGravity.BOTTOM,
+                backgroundColor: Colors.tealAccent,
+                textColor: Colors.black,
+                fontSize: 16.0);
+            extractedText = jsonErrorMessage[0];
+            _showExtractDialog(context);
+          }
 
-          Fluttertoast.showToast(
-              msg: jsonErrorMessage[0],
-              toastLength: Toast.LENGTH_LONG,
-              gravity: ToastGravity.BOTTOM,
-              backgroundColor: Colors.tealAccent,
-              textColor: Colors.black,
-              fontSize: 16.0);
+
+
 
         }
         setState(() {

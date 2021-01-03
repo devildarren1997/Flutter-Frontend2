@@ -53,7 +53,7 @@ class _SignFormState extends State<SignForm> {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
 
     var jsonResponse = null;
-    var response = await http.post("http://192.168.8.126:8090/sign_in",
+    var response = await http.post("http://embeddingsystem.us-east-2.elasticbeanstalk.com/sign_in",
         headers: <String, String>{"Content-Type":"application/json"},
         body: jsonEncode(<String, String>{
           'email': email,

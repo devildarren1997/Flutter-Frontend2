@@ -39,7 +39,7 @@ class _BodyState extends State<Body> {
   embedImage(String text, password, image, filterName,imageName, int userId) async {
 
     var jsonResponse = null;
-    var response = await http.post("http://192.168.8.126:8090/getTempEmbeddedImage",
+    var response = await http.post("http://embeddingsystem.us-east-2.elasticbeanstalk.com/getTempEmbeddedImage",
         body: jsonEncode(<String, dynamic>{
           'userId': userId,
           'filter': filterName,

@@ -4,7 +4,7 @@ import 'body.dart';
 class Product {
   final String image, title, description, designer, filter;
   final int price, id;
-  final Color color;
+  final Color color, textColor;
   Product({
     this.id,
     this.filter,
@@ -14,6 +14,7 @@ class Product {
     this.description,
     this.designer,
     this.color,
+    this.textColor,
   });
 }
 
@@ -31,8 +32,12 @@ List<Product> products = [
       price: 234,
       designer: "Gong Chenyue",
       description: dummyText,
-      image: 'assets/images/catImage.jpg',
-      color: Color(0xFF979797)),
+      image: 'assets/images/mosaic.png',
+      color: Color(0xFF979797),
+      textColor: Colors.white,
+
+  ),
+
   Product(
       id: 2,
       filter: "pencil",
@@ -40,17 +45,24 @@ List<Product> products = [
       price: 234,
       designer: "Gong Chenyue",
       description: dummyText,
-      image: 'assets/images/catImage.jpg',
-      color: Color(0xFFC2A121)),
+      image: 'assets/images/pencil.jpeg',
+      color: Color(0xFFC2A121),
+      textColor: Colors.black,
+
+  ),
   Product(
       id: 3,
       filter: "pixelextension",
       title: "Pixel Extension",
       price: 234,
       designer: "Tan Qing Lin",
-      description: dummyText,
-      image: 'assets/images/catImage.jpg',
-      color: Color(0xFFff00ff)),
+      description: "Data is embedded into the image through pixel extension. This algorithm requires high precision of pixels' RGB value. "
+          "Image with pixel's RGB value that is nearly the same will have big chance to get error in extraction.",
+      image: 'assets/images/pixelextension.png',
+      color: Colors.deepPurpleAccent,
+      textColor: Colors.limeAccent,
+
+  ),
   Product(
       id: 4,
       filter: "collageseffect",
@@ -58,6 +70,8 @@ List<Product> products = [
       price: 234,
       designer: "Tan Qing Lin",
       description: dummyText,
-      image: 'assets/images/catImage.jpg',
-      color: Color(0xFFE6B399)),
+      image: 'assets/images/collages.jpg',
+      color: Color(0xFFE6B399),
+      textColor: Colors.white,
+  ),
 ];
