@@ -85,7 +85,7 @@ class _BodyState extends State<Body> {
                 gravity: ToastGravity.BOTTOM,
                 backgroundColor: Colors.tealAccent,
                 textColor: Colors.black,
-                fontSize: 18.0);
+                fontSize: 16.0);
 
 
         }
@@ -112,6 +112,15 @@ class _BodyState extends State<Body> {
       setState(() {
         _isLoading = false;
       });
+
+      Fluttertoast.showToast(
+          msg: "Failure on server. Sorry....",
+          toastLength: Toast.LENGTH_LONG,
+          gravity: ToastGravity.BOTTOM,
+          backgroundColor: Colors.tealAccent,
+          textColor: Colors.black,
+          fontSize: 14.0);
+
       print(response.body);
     }
   }
@@ -129,9 +138,9 @@ class _BodyState extends State<Body> {
             ),
             child: Image.asset(
               'assets/images/SelectImage.jpeg',
-              fit: BoxFit.fitWidth,
-              height: 400,
-              width: 400,
+              fit: BoxFit.fill,
+              height: 350,
+              width: 350,
             ),
           ),
       );
@@ -150,9 +159,9 @@ class _BodyState extends State<Body> {
             children: [
               Image.file(
                 imageFile,
-                fit: BoxFit.fitWidth,
-                height: 400,
-                width: 400,
+                fit: BoxFit.contain,
+                height: 350,
+                width: 350,
               ),
               Text(
                   "Tap to Select Again",
@@ -302,87 +311,92 @@ class _BodyState extends State<Body> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: SizedBox(
+      child: _isLoading ? Center(child: CircularProgressIndicator()): SizedBox(
         width: double.infinity,
           child: Padding(
             padding:
-            EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(10)),
+            EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(15)),
             child: SingleChildScrollView(
-              child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children:  <Widget>[
-                    SizedBox(height: SizeConfig.screenHeight * 0.04),
-                    _displayImageView(),
-                    SizedBox(height: SizeConfig.screenHeight * 0.03),
-                    Form(
-                      key: _formKey,
-                      child: Column(
-                        children: [
-                        _EmbedText(),
-                        SizedBox(height: SizeConfig.screenHeight * 0.02),
-                        _SecondaryPassword(),
-                        FormError(errors: errors),
-                        SizedBox(height: SizeConfig.screenHeight * 0.02),
-                        Row(
-                          children: <Widget>[
-                            Expanded(
-                                child: SizedBox(
-                                  height: 50,
-                                  child: FlatButton(
-                                    shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(18)),
-                                    color: widget.product.color,
-                                    onPressed: () async {
-                                      if(_formKey.currentState.validate()){
-                                        _formKey.currentState.save();
-                                        final String textToEmbed = embedTextController.text;
-                                        final String passwordSecondary = secondaryTextController.text;
+                child: Container(
+                  child: Center(
+                    child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children:  <Widget>[
+                          SizedBox(height: SizeConfig.screenHeight * 0.06),
+                          _displayImageView(),
+                          SizedBox(height: SizeConfig.screenHeight * 0.03),
+                          Form(
+                            key: _formKey,
+                            child: Column(
+                              children: [
+                                _EmbedText(),
+                                SizedBox(height: SizeConfig.screenHeight * 0.02),
+                                _SecondaryPassword(),
+                                FormError(errors: errors),
+                                SizedBox(height: SizeConfig.screenHeight * 0.02),
+                                Row(
+                                  children: <Widget>[
+                                    Expanded(
+                                        child: SizedBox(
+                                          height: 50,
+                                          child: FlatButton(
+                                            shape: RoundedRectangleBorder(
+                                                borderRadius: BorderRadius.circular(18)),
+                                            color: widget.product.color,
+                                            onPressed: () async {
+                                              if(_formKey.currentState.validate()){
+                                                _formKey.currentState.save();
+                                                final String textToEmbed = embedTextController.text;
+                                                final String passwordSecondary = secondaryTextController.text;
 
-                                        if(imageFile == null){
-                                          Fluttertoast.showToast(
-                                              msg: "Please insert an image",
-                                              toastLength: Toast.LENGTH_LONG,
-                                              gravity: ToastGravity.BOTTOM,
-                                              backgroundColor: Colors.tealAccent,
-                                              textColor: Colors.black,
-                                              fontSize: 16.0);
-                                        }else{
-                                          String imagePath = imageFile.path.split('/').last;
-                                          String imageName = imagePath.split('.').first;
-                                          final bytes = await imageFile.readAsBytesSync();
-                                          String image64 = base64Encode(bytes);
-                                          String filterName = widget.product.filter;
-                                          globals.productId = widget.product.id;
-                                          setState(() {
-                                            _isLoading = true;
-                                          });
+                                                if(imageFile == null){
+                                                  Fluttertoast.showToast(
+                                                      msg: "Please insert an image",
+                                                      toastLength: Toast.LENGTH_LONG,
+                                                      gravity: ToastGravity.BOTTOM,
+                                                      backgroundColor: Colors.tealAccent,
+                                                      textColor: Colors.black,
+                                                      fontSize: 16.0);
+                                                }else{
+                                                  String imagePath = imageFile.path.split('/').last;
+                                                  String imageName = imagePath.split('.').first;
+                                                  final bytes = await imageFile.readAsBytesSync();
+                                                  String image64 = base64Encode(bytes);
+                                                  String filterName = widget.product.filter;
+                                                  globals.productId = widget.product.id;
+                                                  setState(() {
+                                                    _isLoading = true;
+                                                  });
 
-                                          embedImage(textToEmbed, passwordSecondary, image64, filterName, imageName, userId);
-                                        }
+                                                  embedImage(textToEmbed, passwordSecondary, image64, filterName, imageName, userId);
+                                                }
 
-                                      }
-                                    },
-                                    child: Text(
-                                      "Embed Now".toUpperCase(),
-                                      style: TextStyle(
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.white,
-                                      ),
-                                    ),
-                                  ),
-                                )),
-                          ],
-                        ),
-                          SizedBox(height: SizeConfig.screenHeight * 0.04),
-                      ],
-                    ),
-                    ),
-                  ],
+                                              }
+                                            },
+                                            child: Text(
+                                              "Embed Now".toUpperCase(),
+                                              style: TextStyle(
+                                                fontSize: 16,
+                                                fontWeight: FontWeight.bold,
+                                                color: Colors.white,
+                                              ),
+                                            ),
+                                          ),
+                                        )),
+                                  ],
+                                ),
+                                SizedBox(height: SizeConfig.screenHeight * 0.04),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                  ),
                 ),
+              ),
+
             ),
           ),
-      ),
     );
   }
 }

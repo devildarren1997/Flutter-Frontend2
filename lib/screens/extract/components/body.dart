@@ -105,10 +105,6 @@ class _BodyState extends State<Body> {
             extractedText = jsonErrorMessage[0];
             _showExtractDialog(context);
           }
-
-
-
-
         }
         setState(() {
           _isLoading = false;
@@ -133,6 +129,15 @@ class _BodyState extends State<Body> {
       setState(() {
         _isLoading = false;
       });
+
+      Fluttertoast.showToast(
+          msg: "Failure on server. Sorry....",
+          toastLength: Toast.LENGTH_LONG,
+          gravity: ToastGravity.BOTTOM,
+          backgroundColor: Colors.tealAccent,
+          textColor: Colors.black,
+          fontSize: 14.0);
+
       print(response.body);
     }
   }
@@ -181,9 +186,9 @@ class _BodyState extends State<Body> {
           ),
           child: Image.asset(
             "assets/images/SelectImageFromGallery.jpeg",
-            fit: BoxFit.fitWidth,
-            height: 400,
-            width: 400,
+            fit: BoxFit.fill,
+            height: 350,
+            width: 350,
           ),
         ),
       );
@@ -205,9 +210,9 @@ class _BodyState extends State<Body> {
             children: [
               Image.file(
                 extractImageFile,
-                fit: BoxFit.fitWidth,
-                height: 400,
-                width: 400,
+                fit: BoxFit.contain,
+                height: 350,
+                width: 350,
               ),
               Text(
                 "Tap to Select Again",
@@ -316,7 +321,7 @@ class _BodyState extends State<Body> {
       child: _isLoading ? Center(child: CircularProgressIndicator()): SizedBox(
         width: double.infinity,
         child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(10)),
+          padding: EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(15)),
           child: SingleChildScrollView(
             child: Container(
               child: Center(

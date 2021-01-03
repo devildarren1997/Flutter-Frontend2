@@ -192,6 +192,7 @@ class _SignFormState extends State<SignForm> {
           SizedBox(height: SizeConfig.screenHeight * 0.08),
           SizedBox(height: getProportionateScreenHeight(20)),
           NoAccountText(),
+          SizedBox(height: getProportionateScreenHeight(20)),
         ],
       ),
     );

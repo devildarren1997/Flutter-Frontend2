@@ -15,7 +15,6 @@ class Body extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
-          SizedBox(height: SizeConfig.screenHeight * 0.04),
           Align(
             alignment: Alignment.topCenter,
             child: Text(
@@ -36,7 +35,7 @@ class Body extends StatelessWidget {
               ),
             ),
           ),
-          SizedBox(height: SizeConfig.screenHeight * 0.05),
+          SizedBox(height: SizeConfig.screenHeight * 0.01),
           Expanded(
             flex: 2,
               child:
@@ -61,7 +60,7 @@ class Body extends StatelessWidget {
                     ),
                   ),
               ),
-          SizedBox(height: SizeConfig.screenHeight * 0.04),
+          SizedBox(height: SizeConfig.screenHeight * 0.02),
         ],
       ),
     );

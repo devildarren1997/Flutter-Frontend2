@@ -55,6 +55,9 @@ class _BodyState extends State<Body> {
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(18)),
                   onPressed: () {
+                    setState(() {
+                      _isLoading = true;
+                    });
                       confirmImage(userId);
                   },
                   child: Text(
@@ -84,6 +87,10 @@ class _BodyState extends State<Body> {
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(18)),
                 onPressed: () async{
+                  setState(() {
+                    _isLoading = true;
+                  });
+
                   refreshImage(userId);
                 },
                 child: Text(
@@ -112,6 +119,10 @@ class _BodyState extends State<Body> {
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(18)),
                 onPressed: () async{
+                  setState(() {
+                    _isLoading = true;
+                  });
+
                   cancelImage(userId);
                 },
                 child: Text(
@@ -144,13 +155,17 @@ class _BodyState extends State<Body> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
                   SizedBox(height: SizeConfig.screenHeight * 0.04),
-                  _displayImageView(),
-                  SizedBox(height: SizeConfig.screenHeight * 0.04),
-                  _refreshButton(),
-                  SizedBox(height: SizeConfig.screenHeight * 0.03),
-                  _confirmButton(),
-                  SizedBox(height: SizeConfig.screenHeight * 0.03),
-                  _cancelButton(),
+                  _isLoading ? Center(child: CircularProgressIndicator()): Column(
+                    children: [
+                      _displayImageView(),
+                      SizedBox(height: SizeConfig.screenHeight * 0.04),
+                      _refreshButton(),
+                      SizedBox(height: SizeConfig.screenHeight * 0.03),
+                      _confirmButton(),
+                      SizedBox(height: SizeConfig.screenHeight * 0.03),
+                      _cancelButton(),
+                    ],
+                  ),
                   SizedBox(height: SizeConfig.screenHeight * 0.03),
                 ],
               ),
@@ -170,11 +185,15 @@ class _BodyState extends State<Body> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
                   SizedBox(height: SizeConfig.screenHeight * 0.04),
-                  _displayImageView(),
-                  SizedBox(height: SizeConfig.screenHeight * 0.04),
-                  _confirmButton(),
-                  SizedBox(height: SizeConfig.screenHeight * 0.03),
-                  _cancelButton(),
+                  _isLoading ? Center(child: CircularProgressIndicator()): Column(
+                    children: <Widget>[
+                      _displayImageView(),
+                      SizedBox(height: SizeConfig.screenHeight * 0.04),
+                      _confirmButton(),
+                      SizedBox(height: SizeConfig.screenHeight * 0.03),
+                      _cancelButton(),
+                    ],
+                  ),
                   SizedBox(height: SizeConfig.screenHeight * 0.03),
                 ],
               ),
@@ -217,6 +236,15 @@ class _BodyState extends State<Body> {
       setState(() {
         _isLoading = false;
       });
+
+      Fluttertoast.showToast(
+          msg: "Failure on server. Sorry....",
+          toastLength: Toast.LENGTH_LONG,
+          gravity: ToastGravity.BOTTOM,
+          backgroundColor: Colors.tealAccent,
+          textColor: Colors.black,
+          fontSize: 14.0);
+
       print(response.body);
     }
   }
@@ -291,6 +319,15 @@ class _BodyState extends State<Body> {
       setState(() {
         _isLoading = false;
       });
+
+      Fluttertoast.showToast(
+          msg: "Failure on server. Sorry....",
+          toastLength: Toast.LENGTH_LONG,
+          gravity: ToastGravity.BOTTOM,
+          backgroundColor: Colors.tealAccent,
+          textColor: Colors.black,
+          fontSize: 14.0);
+
       print(response.body);
     }
   }
@@ -336,7 +373,7 @@ class _BodyState extends State<Body> {
               gravity: ToastGravity.BOTTOM,
               backgroundColor: Colors.tealAccent,
               textColor: Colors.black,
-              fontSize: 18.0);
+              fontSize: 16.0);
 
 
         }
@@ -363,6 +400,15 @@ class _BodyState extends State<Body> {
       setState(() {
         _isLoading = false;
       });
+
+      Fluttertoast.showToast(
+          msg: "Failure on server. Sorry....",
+          toastLength: Toast.LENGTH_LONG,
+          gravity: ToastGravity.BOTTOM,
+          backgroundColor: Colors.tealAccent,
+          textColor: Colors.black,
+          fontSize: 14.0);
+
       print(response.body);
     }
   }

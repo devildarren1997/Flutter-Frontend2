@@ -28,6 +28,13 @@ class _ExtractHomeScreenState extends State<ExtractHomeScreen> {
           ),
         ),
         centerTitle: true,
+        bottom: PreferredSize(
+          child: Container(
+            color: Colors.lime,
+            height: 2.0,
+          ),
+          preferredSize: Size.fromHeight(2.0),
+        ),
       ),
       body: Body(),
       bottomNavigationBar: CurvedNavigationBar(

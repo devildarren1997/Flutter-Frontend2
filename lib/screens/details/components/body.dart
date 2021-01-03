@@ -17,14 +17,13 @@ class Body extends StatelessWidget {
     return SingleChildScrollView(
       child: Column(
         children: <Widget>[
-          SizedBox(height: getProportionateScreenHeight(10)),
           SizedBox(
             height: size.height,
             child: Stack(
               children: <Widget>[
                 // Container of the description
                 Container(
-                  margin: EdgeInsets.only(top: size.height*0.42),
+                  margin: EdgeInsets.only(top: size.height*0.40),
                   decoration: BoxDecoration(
                     color: kSecondaryBackground,
                     borderRadius: BorderRadius.only(
@@ -54,10 +53,11 @@ class Body extends StatelessWidget {
                           ),
                           textAlign: TextAlign.justify,
                         ),
-                        SizedBox(height: 50),
+                        SizedBox(height: getProportionateScreenHeight(15)),
                         Row(
                             children: <Widget>[
                               Expanded(
+                                flex: 1,
                                   child: SizedBox(
                                     height: 50,
                                     child: FlatButton(
@@ -93,7 +93,9 @@ class Body extends StatelessWidget {
 
                 // Effect Image and Designer
                 Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 10),
+                  padding: const EdgeInsets.only(
+                    top: 0.0
+                  ),
                     child: Column(
                       children: <Widget>[
                         Card(
@@ -107,13 +109,13 @@ class Body extends StatelessWidget {
                                 image: AssetImage(
                                   product.image,
                                 ),
-                                height: 300,
+                                height: 230,
                                 fit: BoxFit.cover,
                                 child: InkWell(
                                   onTap: (){}
                                 ),
                               ),
-                              
+
                               Positioned(
                                 bottom: 5,
                                 right: 10,
@@ -144,7 +146,7 @@ class Body extends StatelessWidget {
                       ],
                     ),
                 ),
-                
+
               ],
             ),
             
