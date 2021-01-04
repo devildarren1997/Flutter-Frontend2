@@ -27,7 +27,7 @@ class _VerificationFormState extends State<VerificationForm> {
   bool _isLoading =false;
 
   verifyRegister(String token) async {
-
+    // embeddingsystem.us-east-2.elasticbeanstalk.com
     var jsonResponse = null;
     var response = await http.post("http://embeddingsystem.us-east-2.elasticbeanstalk.com/confirm_user",
         body: jsonEncode(<String, String>{

@@ -1,6 +1,7 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:fypapp/constants.dart';
 import 'package:fypapp/screens/extract_home/extract_home_screen.dart';
 import 'package:fypapp/screens/sign_in/sign_in_screen.dart';
@@ -58,6 +59,15 @@ class _HomeScreenState extends State<HomeScreen> {
                 Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(
                     builder: (BuildContext context) => SignInScreen()), (
                     Route<dynamic> route) => false);
+
+                Fluttertoast.showToast(
+                    msg: "You have logged out",
+                    toastLength: Toast.LENGTH_LONG,
+                    gravity: ToastGravity.BOTTOM,
+                    backgroundColor: Colors.tealAccent,
+                    textColor: Colors.black,
+                    fontSize: 15.0);
+
               }),
         ],
         bottom: PreferredSize(

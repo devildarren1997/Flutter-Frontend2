@@ -8,6 +8,7 @@ import 'package:fypapp/components/custom_surfix_icon.dart';
 import 'package:fypapp/components/default_button.dart';
 import 'package:fypapp/components/form_error.dart';
 import 'package:fypapp/constants.dart';
+import 'package:fypapp/global.dart' as globals;
 import 'package:http/http.dart' as http;
 
 class ResetPasswordForm extends StatefulWidget {
@@ -25,13 +26,14 @@ class _ResetPasswordFormState extends State<ResetPasswordForm> {
 
   final List<String> errors = [];
 
-  confirmChangePassword(String password) async {
+  confirmChangePassword(String password, email) async {
 
 
     var jsonResponse = null;
     var response = await http.post("http://embeddingsystem.us-east-2.elasticbeanstalk.com/change_password",
         body: jsonEncode(<String, String>{
-      'password':password,
+          'password':password,
+          'email':email,
     }));
 
     if(response.statusCode == 200) {
@@ -146,7 +148,7 @@ class _ResetPasswordFormState extends State<ResetPasswordForm> {
                 setState(() {
                   _isLoading = true;
                 });
-                confirmChangePassword(password);
+                confirmChangePassword(password, globals.userEmail);
                 
               }
             },

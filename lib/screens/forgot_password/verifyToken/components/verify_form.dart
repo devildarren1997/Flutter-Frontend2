@@ -28,7 +28,7 @@ class _VerificationFormState extends State<VerificationForm> {
 
 
   verifyPasswordReset(String token) async {
-
+    // embeddingsystem.us-east-2.elasticbeanstalk.com
     var jsonResponse = null;
     var response = await http.post("http://embeddingsystem.us-east-2.elasticbeanstalk.com/confirm_change_password",
         body: jsonEncode(<String, String>{
@@ -82,6 +82,7 @@ class _VerificationFormState extends State<VerificationForm> {
 
       if(jsonException.length != 0){
         print(jsonException[0]);
+        print(response.body);
         Fluttertoast.showToast(
             msg: jsonException[0],
             toastLength: Toast.LENGTH_LONG,

@@ -9,6 +9,7 @@ import 'package:fypapp/components/no_account_text.dart';
 import 'package:fypapp/components/form_error.dart';
 import 'package:fypapp/components/default_button.dart';
 import 'package:fypapp/components/custom_surfix_icon.dart';
+import 'package:fypapp/global.dart' as globals;
 import 'package:http/http.dart' as http;
 
 class Body extends StatelessWidget {
@@ -72,7 +73,7 @@ class _ForgotPassFormState extends State<ForgotPassForm> {
   }
 
   forgetPassword(String email) async {
-
+    // embeddingsystem.us-east-2.elasticbeanstalk.com
     var jsonResponse = null;
     var response = await http.post("http://embeddingsystem.us-east-2.elasticbeanstalk.com/forget_password",
         body: jsonEncode(<String, String>{
@@ -94,6 +95,8 @@ class _ForgotPassFormState extends State<ForgotPassForm> {
             backgroundColor: Colors.tealAccent,
             textColor: Colors.black,
             fontSize: 18.0);
+
+        globals.userEmail = email;
 
         setState(() {
           _isLoading = false;
