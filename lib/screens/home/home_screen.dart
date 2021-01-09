@@ -1,4 +1,5 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -34,6 +35,43 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
+  Future<void> _showContactDialog(BuildContext context){
+    return showDialog(
+        context: context,
+        builder: (context){
+          return AlertDialog(
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(15))),
+            title: Text("Contact Us: ",
+              textAlign: TextAlign.start,
+              style: TextStyle(color: Colors.black45, fontWeight: FontWeight.bold, fontSize: 20),
+            ),
+            content: RichText(
+              text: TextSpan(
+                text: "Kindly contact us at:",
+                style: TextStyle(color: Colors.black, fontSize: 19, fontFamily: "Muli"),
+                children: <TextSpan>[
+                  TextSpan(
+                      text: "\nembedapptesting@gmail.com",
+                      style: TextStyle(color: Colors.black, fontSize: 16, fontWeight: FontWeight.bold, fontStyle: FontStyle.italic),
+                  ),
+                ],
+              ),
+            ),
+            // Text("Kindly contact us at:\nembedapptesting@gmail.com",
+            //   style: TextStyle(color: Colors.black, fontSize: 18),
+            // ),
+            actions: <Widget>[
+              FlatButton(
+                  onPressed: (){
+                    Navigator.pop(context);
+                  },
+                  child: Text("Close"))
+            ],
+          );
+        }
+    );
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -51,6 +89,12 @@ class _HomeScreenState extends State<HomeScreen> {
         centerTitle: true,
         automaticallyImplyLeading: false,
         actions: <Widget>[
+          IconButton(
+              icon: SvgPicture.asset('assets/icons/Call.svg'),
+              onPressed: () {
+                _showContactDialog(context);
+              }
+              ),
           IconButton(
               icon: SvgPicture.asset('assets/icons/Log out.svg'),
               onPressed: () {

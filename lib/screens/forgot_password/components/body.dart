@@ -74,8 +74,9 @@ class _ForgotPassFormState extends State<ForgotPassForm> {
 
   forgetPassword(String email) async {
     // embeddingsystem.us-east-2.elasticbeanstalk.com
+    //192.168.8.126:8090
     var jsonResponse = null;
-    var response = await http.post("http://embeddingsystem.us-east-2.elasticbeanstalk.com/forget_password",
+    var response = await http.post("http://192.168.8.126:8090/forget_password",
         body: jsonEncode(<String, String>{
           'email': email,
         }));
@@ -94,7 +95,7 @@ class _ForgotPassFormState extends State<ForgotPassForm> {
             gravity: ToastGravity.BOTTOM,
             backgroundColor: Colors.tealAccent,
             textColor: Colors.black,
-            fontSize: 18.0);
+            fontSize: 15.0);
 
         globals.userEmail = email;
 
@@ -115,7 +116,7 @@ class _ForgotPassFormState extends State<ForgotPassForm> {
                 gravity: ToastGravity.BOTTOM,
                 backgroundColor: Colors.tealAccent,
                 textColor: Colors.black,
-                fontSize: 18.0);
+                fontSize: 15.0);
 
           }else if(error.contains("Something wrong")){
             Fluttertoast.showToast(
@@ -133,16 +134,15 @@ class _ForgotPassFormState extends State<ForgotPassForm> {
       }
 
       if(jsonException.length != 0 ){
+        print("you are in exception");
         print(jsonException[0]);
         Fluttertoast.showToast(
-            msg: "You are in exception",
+            msg: "Some problems occur with the application. Please contact us.",
             toastLength: Toast.LENGTH_LONG,
             gravity: ToastGravity.BOTTOM,
             backgroundColor: Colors.tealAccent,
             textColor: Colors.black,
-            fontSize: 18.0);
-        print("you are in exception");
-        print(jsonResponse['errorMessage']);
+            fontSize: 15.0);
       }
     }
     else {
@@ -150,6 +150,15 @@ class _ForgotPassFormState extends State<ForgotPassForm> {
       setState(() {
         _isLoading = false;
       });
+
+      Fluttertoast.showToast(
+          msg: "Failure on server. Please contact us.",
+          toastLength: Toast.LENGTH_LONG,
+          gravity: ToastGravity.BOTTOM,
+          backgroundColor: Colors.tealAccent,
+          textColor: Colors.black,
+          fontSize: 15.0);
+
       print(response.body);
     }
   }

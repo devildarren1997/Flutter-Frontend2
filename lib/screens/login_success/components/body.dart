@@ -40,7 +40,7 @@ class Body extends StatelessWidget {
           child:
             SizedBox(
               child: DefaultButton(
-                text: "Back to home",
+                text: "Go to home",
                 press: () {
                   Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
                       builder: (BuildContext context) => HomeScreen()), (route) => false);

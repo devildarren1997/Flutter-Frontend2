@@ -32,14 +32,16 @@ class _BodyState extends State<Body> {
   String secondaryPassword;
   File imageFile;
   bool _isLoading =false;
+  bool _isHidden = true;
   final List<String> errors = [];
   final _formKey = GlobalKey<FormState>();
 
 
   embedImage(String text, password, image, filterName,imageName, int userId) async {
-
+    // embeddingsystem.us-east-2.elasticbeanstalk.com
+    //192.168.8.126:8090
     var jsonResponse = null;
-    var response = await http.post("http://embeddingsystem.us-east-2.elasticbeanstalk.com/getTempEmbeddedImage",
+    var response = await http.post("http://192.168.8.126:8090/getTempEmbeddedImage",
         body: jsonEncode(<String, dynamic>{
           'userId': userId,
           'filter': filterName,
@@ -68,7 +70,7 @@ class _BodyState extends State<Body> {
             gravity: ToastGravity.BOTTOM,
             backgroundColor: Colors.tealAccent,
             textColor: Colors.black,
-            fontSize: 16.0);
+            fontSize: 15.0);
 
         Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(
             builder: (BuildContext context) => ReviewScreen(jsonImage)), (
@@ -85,7 +87,7 @@ class _BodyState extends State<Body> {
                 gravity: ToastGravity.BOTTOM,
                 backgroundColor: Colors.tealAccent,
                 textColor: Colors.black,
-                fontSize: 16.0);
+                fontSize: 15.0);
 
 
         }
@@ -95,16 +97,15 @@ class _BodyState extends State<Body> {
       }
 
       if(jsonException.length != 0){
+        print("you are in exception");
         print(jsonException[0]);
         Fluttertoast.showToast(
-            msg: jsonException[0],
+            msg: "Some problems occur with the application. Please contact us.",
             toastLength: Toast.LENGTH_LONG,
             gravity: ToastGravity.BOTTOM,
             backgroundColor: Colors.tealAccent,
             textColor: Colors.black,
-            fontSize: 18.0);
-        print("you are in exception");
-
+            fontSize: 15.0);
       }
 
     }else {
@@ -114,12 +115,12 @@ class _BodyState extends State<Body> {
       });
 
       Fluttertoast.showToast(
-          msg: "Failure on server. Sorry....",
+          msg: "Failure on server. Please contact us.",
           toastLength: Toast.LENGTH_LONG,
           gravity: ToastGravity.BOTTOM,
           backgroundColor: Colors.tealAccent,
           textColor: Colors.black,
-          fontSize: 14.0);
+          fontSize: 15.0);
 
       print(response.body);
     }
@@ -195,6 +196,12 @@ class _BodyState extends State<Body> {
       globals.imagePath = image.path;
     });
     Navigator.of(context).pop();
+  }
+
+  void _toggleVisibility(){
+    setState(() {
+      _isHidden = !_isHidden;
+    });
   }
 
   Future<void> _showChoiceDialog(BuildContext context){
@@ -289,11 +296,12 @@ class _BodyState extends State<Body> {
       controller: secondaryTextController,
       onSaved: (newValue) => secondaryPassword = newValue,
       style: TextStyle(color: kTextColor),
+      obscureText: _isHidden,
 
       maxLength: 20,
       maxLengthEnforced: true,
       decoration: InputDecoration(
-        hintStyle: TextStyle(color: kTextColor, fontSize: 12.5),
+        hintStyle: TextStyle(color: kTextColor, fontSize: 12),
         labelStyle: TextStyle(color: kTextColor, fontSize: 23),
         counterStyle: TextStyle(color: kTextColor),
         labelText: "Secondary Password",
@@ -301,7 +309,16 @@ class _BodyState extends State<Body> {
         // If  you are using latest version of flutter then lable text and hint text shown like this
         // if you r using flutter less then 1.20.* then maybe this is not working properly
         floatingLabelBehavior: FloatingLabelBehavior.always,
-        suffixIcon: CustomSurffixIcon(svgIcon: "assets/icons/Lock.svg"),
+        suffixIcon: IconButton(
+          onPressed: _toggleVisibility,
+          icon: _isHidden ? Icon(Icons.visibility_off_outlined) : Icon(Icons.visibility_outlined),
+          padding: EdgeInsets.fromLTRB(
+            0,
+            getProportionateScreenWidth(20),
+            getProportionateScreenWidth(20),
+            getProportionateScreenWidth(20)),
+          color: Color(0xFF757575),
+        ),
       ),
     );
   }

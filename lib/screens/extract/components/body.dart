@@ -4,7 +4,6 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:fypapp/components/custom_surfix_icon.dart';
 import 'package:http/http.dart' as http;
 import 'package:fypapp/global.dart' as globals;
 import 'package:fypapp/screens/home/home_screen.dart';
@@ -30,13 +29,15 @@ class _BodyState extends State<Body> {
   int userId = globals.userId;
   String secondaryPassword;
   bool _isLoading = false;
+  bool _isHidden = true;
   File extractImageFile;
 
 
   extractImage(String image, password, filterName, int userId) async {
-
+    // embeddingsystem.us-east-2.elasticbeanstalk.com
+    //192.168.8.126:8090
     var jsonResponse = null;
-    var response = await http.post("http://embeddingsystem.us-east-2.elasticbeanstalk.com/extractFromImage",
+    var response = await http.post("http://192.168.8.126:8090/extractFromImage",
         body: jsonEncode(<String, dynamic>{
           'userId': userId,
           'filter': filterName,
@@ -49,8 +50,8 @@ class _BodyState extends State<Body> {
 
       var jsonString = jsonResponse['status'];
       var jsonExtractedMessage = jsonResponse['hiddenInformation'];
-      // var jsonException = [];
-      // jsonException = jsonResponse['exception'];
+      var jsonException = [];
+      jsonException = jsonResponse['exception'];
 
       if (jsonString == "s") {
         setState(() {
@@ -65,7 +66,7 @@ class _BodyState extends State<Body> {
               gravity: ToastGravity.BOTTOM,
               backgroundColor: Colors.tealAccent,
               textColor: Colors.black,
-              fontSize: 16.0);
+              fontSize: 15.0);
         _showExtractDialog(context);
         }else{
           Fluttertoast.showToast(
@@ -74,7 +75,7 @@ class _BodyState extends State<Body> {
               gravity: ToastGravity.BOTTOM,
               backgroundColor: Colors.tealAccent,
               textColor: Colors.black,
-              fontSize: 16.0);
+              fontSize: 15.0);
           extractedText = "We couldn't find message embedded in the image.\nPlease input the correct image";
           _showExtractDialog(context);
         }
@@ -83,46 +84,34 @@ class _BodyState extends State<Body> {
         var jsonErrorMessage = [];
         jsonErrorMessage = jsonResponse['error'];
         if(jsonErrorMessage.length != 0){
-          if(jsonErrorMessage[0].toString().contains("102")){
+
             Fluttertoast.showToast(
                 msg: jsonErrorMessage[0],
                 toastLength: Toast.LENGTH_LONG,
                 gravity: ToastGravity.BOTTOM,
                 backgroundColor: Colors.tealAccent,
                 textColor: Colors.black,
-                fontSize: 16.0);
-            extractedText = "We have failed to extract the complete binary bit embedded to the Image.";
-            _showExtractDialog(context);
-          }
-          else{
-            Fluttertoast.showToast(
-                msg: jsonErrorMessage[0],
-                toastLength: Toast.LENGTH_LONG,
-                gravity: ToastGravity.BOTTOM,
-                backgroundColor: Colors.tealAccent,
-                textColor: Colors.black,
-                fontSize: 16.0);
+                fontSize: 15.0);
             extractedText = jsonErrorMessage[0];
             _showExtractDialog(context);
-          }
+
         }
         setState(() {
           _isLoading = false;
         });
       }
 
-      // if(jsonException.length != 0){
-      //   print(jsonException[0]);
-      //   Fluttertoast.showToast(
-      //       msg: jsonException[0],
-      //       toastLength: Toast.LENGTH_LONG,
-      //       gravity: ToastGravity.BOTTOM,
-      //       backgroundColor: Colors.tealAccent,
-      //       textColor: Colors.black,
-      //       fontSize: 18.0);
-      //   print("you are in exception");
-      //
-      // }
+      if(jsonException.length != 0){
+        print("you are in exception");
+        print(jsonException[0]);
+        Fluttertoast.showToast(
+            msg: "Some problems occur with the application. Please contact us.",
+            toastLength: Toast.LENGTH_LONG,
+            gravity: ToastGravity.BOTTOM,
+            backgroundColor: Colors.tealAccent,
+            textColor: Colors.black,
+            fontSize: 15.0);
+      }
 
     }else {
       print("Status is not 200");
@@ -131,12 +120,12 @@ class _BodyState extends State<Body> {
       });
 
       Fluttertoast.showToast(
-          msg: "Failure on server. Sorry....",
+          msg: "Failure on server. Please contact us.",
           toastLength: Toast.LENGTH_LONG,
           gravity: ToastGravity.BOTTOM,
           backgroundColor: Colors.tealAccent,
           textColor: Colors.black,
-          fontSize: 14.0);
+          fontSize: 15.0);
 
       print(response.body);
     }
@@ -293,11 +282,18 @@ class _BodyState extends State<Body> {
         });
   }
 
+  void _toggleVisibility(){
+    setState(() {
+      _isHidden = !_isHidden;
+    });
+  }
+
   Widget _SecondaryPassword(){
     return TextFormField(
       controller: secondaryTextController,
       onSaved: (newValue) => secondaryPassword = newValue,
       style: TextStyle(color: kTextColor),
+      obscureText: _isHidden,
 
       maxLength: 20,
       maxLengthEnforced: true,
@@ -310,7 +306,17 @@ class _BodyState extends State<Body> {
         // If  you are using latest version of flutter then lable text and hint text shown like this
         // if you r using flutter less then 1.20.* then maybe this is not working properly
         floatingLabelBehavior: FloatingLabelBehavior.always,
-        suffixIcon: CustomSurffixIcon(svgIcon: "assets/icons/Lock.svg"),
+        suffixIcon: IconButton(
+        onPressed: _toggleVisibility,
+        icon: _isHidden ? Icon(Icons.visibility_off_outlined) : Icon(Icons.visibility_outlined),
+        padding: EdgeInsets.fromLTRB(
+            0,
+            getProportionateScreenWidth(20),
+            getProportionateScreenWidth(20),
+            getProportionateScreenWidth(20)),
+        color: Color(0xFF757575),
+
+      ),
       ),
     );
   }

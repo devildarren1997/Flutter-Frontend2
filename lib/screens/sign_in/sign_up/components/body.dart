@@ -23,12 +23,6 @@ class Body extends StatelessWidget {
                 ),
                 SizedBox(height: SizeConfig.screenHeight * 0.06),
                 SignUpForm(),
-                SizedBox(height: getProportionateScreenHeight(20)),
-                Text(
-                  'By continuing your confirm that you agree \nwith our Term and Condition',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(color: kTextColor, fontSize: 12, fontStyle: FontStyle.italic),
-                )
               ],
             ),
           ),

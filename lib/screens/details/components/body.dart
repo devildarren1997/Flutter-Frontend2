@@ -44,16 +44,29 @@ class Body extends StatelessWidget {
                           textAlign: TextAlign.start,
                           style: Theme.of(context).textTheme.headline4.copyWith(color: kTextColor, fontWeight: FontWeight.bold, fontFamily: 'Muli')
                         ),
-                        SizedBox(height: 20),
+                        RichText(
+                          text: TextSpan(
+                            children: [
+                              TextSpan(text: "Designer\n", style: Theme.of(context).textTheme.headline6.copyWith(color: kTextColor, fontSize: 15)),
+                              TextSpan(
+                                text: "${product.designer}",
+                                style: Theme.of(context).textTheme.headline6.copyWith(
+                                    color: kTextColor, fontWeight: FontWeight.bold, fontFamily: 'Muli', fontSize: 19
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        SizedBox(height: SizeConfig.screenHeight * 0.018),
                         Text(
                           product.description,
                           style: TextStyle(
                             color: Colors.white,
-                            fontSize: 18,
+                            fontSize: 17,
                           ),
                           textAlign: TextAlign.justify,
                         ),
-                        SizedBox(height: getProportionateScreenHeight(15)),
+                        SizedBox(height: SizeConfig.screenHeight * 0.04),
                         Row(
                             children: <Widget>[
                               Expanded(
@@ -116,30 +129,30 @@ class Body extends StatelessWidget {
                                 ),
                               ),
 
-                              Positioned(
-                                bottom: 5,
-                                right: 10,
-                                left: 16,
-                                child: Row(
-                                  children: <Widget>[
-                                  RichText(
-                                    text: TextSpan(
-                                      children: [
-                                        TextSpan(text: "Designer\n", style: TextStyle(
-                                          color: product.textColor, fontSize: 20,
-                                        )),
-                                        TextSpan(
-                                          text: "${product.designer}",
-                                          style: Theme.of(context).textTheme.headline4.copyWith(
-                                              color: product.textColor, fontWeight: FontWeight.bold, fontFamily: 'Muli'
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ],
-                                ),
-                              ),
+                              // Positioned(
+                              //   bottom: 5,
+                              //   right: 10,
+                              //   left: 16,
+                              //   child: Row(
+                              //     children: <Widget>[
+                              //     RichText(
+                              //       text: TextSpan(
+                              //         children: [
+                              //           TextSpan(text: "Designer\n", style: TextStyle(
+                              //             color: product.textColor, fontSize: 20,
+                              //           )),
+                              //           TextSpan(
+                              //             text: "${product.designer}",
+                              //             style: Theme.of(context).textTheme.headline4.copyWith(
+                              //                 color: product.textColor, fontWeight: FontWeight.bold, fontFamily: 'Muli'
+                              //             ),
+                              //           ),
+                              //         ],
+                              //       ),
+                              //     ),
+                              //   ],
+                              //   ),
+                              // ),
                             ],
                           ),
                         ),

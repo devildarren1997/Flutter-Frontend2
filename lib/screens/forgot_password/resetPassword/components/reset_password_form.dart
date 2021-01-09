@@ -27,10 +27,10 @@ class _ResetPasswordFormState extends State<ResetPasswordForm> {
   final List<String> errors = [];
 
   confirmChangePassword(String password, email) async {
-
-
+//embeddingsystem.us-east-2.elasticbeanstalk.com
+//192.168.8.126:8090
     var jsonResponse = null;
-    var response = await http.post("http://embeddingsystem.us-east-2.elasticbeanstalk.com/change_password",
+    var response = await http.post("http://192.168.8.126:8090/change_password",
         body: jsonEncode(<String, String>{
           'password':password,
           'email':email,
@@ -54,7 +54,7 @@ class _ResetPasswordFormState extends State<ResetPasswordForm> {
             gravity: ToastGravity.BOTTOM,
             backgroundColor: Colors.tealAccent,
             textColor: Colors.black,
-            fontSize: 18.0);
+            fontSize: 15.0);
 
         Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (BuildContext context) => SignInScreen()), (Route<dynamic> route) => false);
       }
@@ -71,16 +71,16 @@ class _ResetPasswordFormState extends State<ResetPasswordForm> {
                 gravity: ToastGravity.BOTTOM,
                 backgroundColor: Colors.tealAccent,
                 textColor: Colors.black,
-                fontSize: 18.0);
+                fontSize: 15.0);
 
-          }else if(error.contains("Something wrong")){
+          }else if(error.contains("Code 101")){
             Fluttertoast.showToast(
-                msg: "Something went wrong with database.\nPlease contact us",
+                msg: "Error occur at database. Please contact us.",
                 toastLength: Toast.LENGTH_LONG,
                 gravity: ToastGravity.BOTTOM,
                 backgroundColor: Colors.tealAccent,
                 textColor: Colors.black,
-                fontSize: 18.0);
+                fontSize: 15.0);
           }
         }
         setState(() {
@@ -89,23 +89,31 @@ class _ResetPasswordFormState extends State<ResetPasswordForm> {
       }
 
       if(jsonException.length != 0 ){
+        print("you are in exception");
         print(jsonException[0]);
         Fluttertoast.showToast(
-            msg: "You are in exception",
+            msg: "Some problems occur with the application. Please contact us.",
             toastLength: Toast.LENGTH_LONG,
             gravity: ToastGravity.BOTTOM,
             backgroundColor: Colors.tealAccent,
             textColor: Colors.black,
-            fontSize: 18.0);
-        print("you are in exception");
-        print(jsonResponse['errorMessage']);
+            fontSize: 15.0);
       }
 
     } else {
+      print("Status is not 200");
       setState(() {
         _isLoading = false;
       });
-      print("Status is not 200");
+
+      Fluttertoast.showToast(
+          msg: "Failure on server. Please contact us.",
+          toastLength: Toast.LENGTH_LONG,
+          gravity: ToastGravity.BOTTOM,
+          backgroundColor: Colors.tealAccent,
+          textColor: Colors.black,
+          fontSize: 15.0);
+
       print(response.body);
     }
   }

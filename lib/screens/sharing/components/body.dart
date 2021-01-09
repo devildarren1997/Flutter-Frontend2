@@ -6,12 +6,9 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import '../../../size_config.dart';
 import 'package:share/share.dart';
-import 'package:permission_handler/permission_handler.dart';
-import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:path_provider/path_provider.dart' as syspaths;
 import 'package:fypapp/global.dart' as globals;
 import 'package:fypapp/screens/home/home_screen.dart';
-import 'package:http/http.dart' as http;
 
 
 class Body extends StatefulWidget {
@@ -54,14 +51,14 @@ class _BodyState extends State<Body> {
     final decodedBytes = base64Decode(widget.jsonImage);
     String imagePath = globals.imagePath.split('/').last;
     String imageName = imagePath.split('.').first;
-    final String path = ("/Pictures");
+    final String path = ("/sdcard/Pictures");
     File imageFile = new File("$path/MarkEmb/$imageName.png");
     imageFile.createSync(recursive: true);
     imageFile.writeAsBytesSync(decodedBytes, flush: true);
 
     if(imageFile != null){
       Fluttertoast.showToast(
-          msg: "Image saved to your gallery. Check your Gallery.",
+          msg: "Image saved to sdcard/Pictures/MarkEmb",
           toastLength: Toast.LENGTH_LONG,
           gravity: ToastGravity.BOTTOM,
           backgroundColor: Colors.tealAccent,
@@ -74,34 +71,11 @@ class _BodyState extends State<Body> {
     });
   }
 
-  // Future<void> saveImage() async{
-  //   try{
-  //     PermissionStatus storageStatus = await Permission.storage.status;
-  //     if(storageStatus != PermissionStatus.granted){
-  //       storageStatus = await Permission.storage.request();
-  //       if(storageStatus != PermissionStatus.granted){
-  //         throw 'Permission denied.Please allow permission to access the storage';
-  //       }
-  //     }
-  //
-  //     final decodedBytes = base64Decode(widget.jsonImage);
-  //     final appDir = await syspaths.getTemporaryDirectory();
-  //     File file = File('${appDir.path}/embeddedImage.png');
-  //     var imageFile = await file.writeAsBytesSync(decodedBytes);
-  //     final result = await ImageGallerySaver.saveFile(imageFile, isReturnPathOfIOS: false );
-  //
-  //     if(result == null || result == '')throw 'Image save failed';
-  //
-  //     print("Saved Success");
-  //   }catch(e){
-  //     print(e.toString());
-  //   }
-  // }
 
   Widget _displayImageView(){
       return Container(
         child: Image.memory(base64Decode(widget.jsonImage)),
-        height: 400,
+        height: 250,
         width: 400,
         alignment: Alignment.topCenter,
       );
@@ -176,41 +150,44 @@ class _BodyState extends State<Body> {
   @override
   Widget build(BuildContext context) {
 
-    return _isLoading ? Center(child: CircularProgressIndicator()):SafeArea(
-      child: SizedBox(
+    return SafeArea(
+      child: _isLoading ? Center(child: CircularProgressIndicator()): SizedBox(
         width: double.infinity,
         child: Padding(
           padding:
           EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(10)),
             child: SingleChildScrollView(
-              child:
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: <Widget>[
-                    SizedBox(height: SizeConfig.screenHeight * 0.02),
-                    Text(
-                      "You have done embedding",
-                      style: TextStyle(
-                        fontSize: 16,
-                        color: Colors.white,
-                      ),
-                    ),
-                    Text(
-                    "Share Save OR Return to Home",
-                      style: TextStyle(
-                        fontSize: 20,
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    SizedBox(height: SizeConfig.screenHeight * 0.03),
-                    _displayImageView(),
-                    _circularShareButton(),
-                    SizedBox(height: SizeConfig.screenHeight * 0.005),
-                    _HomeButton(),
-                    SizedBox(height: SizeConfig.screenHeight * 0.04),
-                  ],
-                ),
+              child: Container(
+                child: Center(
+                    child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: <Widget>[
+                            SizedBox(height: SizeConfig.screenHeight * 0.02),
+                            Text(
+                              "You have done embedding",
+                              style: TextStyle(
+                                fontSize: 16,
+                                color: Colors.white,
+                              ),
+                            ),
+                            Text(
+                            "Share Save OR Return to Home",
+                              style: TextStyle(
+                                fontSize: 20,
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            SizedBox(height: SizeConfig.screenHeight * 0.03),
+                            _displayImageView(),
+                            _circularShareButton(),
+                            SizedBox(height: SizeConfig.screenHeight * 0.005),
+                            _HomeButton(),
+                            SizedBox(height: SizeConfig.screenHeight * 0.04),
+                          ],
+                        ),
+                  ),
+              ),
             ),
         ),
       ),

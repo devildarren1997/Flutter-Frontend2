@@ -18,12 +18,6 @@ class Product {
   });
 }
 
-
-String dummyText =
-    "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since. When an unknown printer took a galley.";
-
-
-
 List<Product> products = [
   Product(
       id: 1,
@@ -31,9 +25,9 @@ List<Product> products = [
       title: "Mosaic Filter",
       price: 234,
       designer: "Gong Chenyue",
-      description: dummyText,
+      description: "Data is embedded into the Mosaic Effect. This algorithm requires PNG type images. It is good to apply on images with few elements.",
       image: 'assets/images/mosaic.png',
-      color: Color(0xFF979797),
+      color: Colors.green,
       textColor: Colors.white,
 
   ),
@@ -44,7 +38,7 @@ List<Product> products = [
       title: "Pencil Drawing",
       price: 234,
       designer: "Gong Chenyue",
-      description: dummyText,
+      description: "Data is embedded into the pencil drawing effect. This algorithm requires PNG type images. It is good to apply on image with high color contrast.",
       image: 'assets/images/pencil.jpeg',
       color: Color(0xFFC2A121),
       textColor: Colors.black,
@@ -56,11 +50,10 @@ List<Product> products = [
       title: "Pixel Extension",
       price: 234,
       designer: "Tan Qing Lin",
-      description: "Data is embedded into the image through pixel extension. This algorithm requires high precision of pixels' RGB value. "
-          "Image with pixel's RGB value that is nearly the same will have big chance to get error in extraction.",
+      description: "Data is embedded into the image through pixel extension. This algorithm will be good for image with high color contrast.",
       image: 'assets/images/pixelextension.png',
       color: Colors.deepPurpleAccent,
-      textColor: Colors.limeAccent,
+      textColor: Colors.greenAccent,
 
   ),
   Product(
@@ -69,8 +62,8 @@ List<Product> products = [
       title: "Collage",
       price: 234,
       designer: "Tan Qing Lin",
-      description: dummyText,
-      image: 'assets/images/collages.jpg',
+      description: "Data is embedded into the border created in the image. The embedding algorithm utilized the RGB value of pixels at image border.",
+      image: 'assets/images/collagesEffect.png',
       color: Color(0xFFE6B399),
       textColor: Colors.white,
   ),

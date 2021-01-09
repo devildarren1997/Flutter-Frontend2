@@ -29,14 +29,14 @@ class _BodyState extends State<Body> {
       if(reviewImage == null){
       return Container(
           child: Image.memory(base64Decode(widget.jsonImage)),
-            height: 400,
+            height: 300,
             width: 400,
             alignment: Alignment.topCenter,
         );
   }else{
         return Container(
           child: Image.memory(base64Decode(reviewImage)),
-          height: 400,
+          height: 300,
           width: 400,
           alignment: Alignment.topCenter,
         );
@@ -145,29 +145,29 @@ class _BodyState extends State<Body> {
   Widget build(BuildContext context) {
     if(productId == 1) {
       return SafeArea(
-        child: SizedBox(
+        child: _isLoading ? Center(child: CircularProgressIndicator()): SizedBox(
           width: double.infinity,
           child: Padding(
             padding:
             EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(10)),
             child: SingleChildScrollView(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  SizedBox(height: SizeConfig.screenHeight * 0.04),
-                  _isLoading ? Center(child: CircularProgressIndicator()): Column(
-                    children: [
-                      _displayImageView(),
-                      SizedBox(height: SizeConfig.screenHeight * 0.04),
-                      _refreshButton(),
-                      SizedBox(height: SizeConfig.screenHeight * 0.03),
-                      _confirmButton(),
-                      SizedBox(height: SizeConfig.screenHeight * 0.03),
-                      _cancelButton(),
-                    ],
+              child: Container(
+                child: Center(
+                    child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: <Widget>[
+                          SizedBox(height: SizeConfig.screenHeight * 0.04),
+                          _displayImageView(),
+                          SizedBox(height: SizeConfig.screenHeight * 0.02),
+                          _refreshButton(),
+                          SizedBox(height: SizeConfig.screenHeight * 0.03),
+                          _confirmButton(),
+                          SizedBox(height: SizeConfig.screenHeight * 0.03),
+                          _cancelButton(),
+                          SizedBox(height: SizeConfig.screenHeight * 0.03),
+                        ],
+                      ),
                   ),
-                  SizedBox(height: SizeConfig.screenHeight * 0.03),
-                ],
               ),
             ),
           ),
@@ -175,27 +175,27 @@ class _BodyState extends State<Body> {
       );
     }else{
       return SafeArea(
-        child: SizedBox(
+        child: _isLoading ? Center(child: CircularProgressIndicator()):SizedBox(
           width: double.infinity,
           child: Padding(
             padding:
             EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(10)),
             child: SingleChildScrollView(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  SizedBox(height: SizeConfig.screenHeight * 0.04),
-                  _isLoading ? Center(child: CircularProgressIndicator()): Column(
-                    children: <Widget>[
-                      _displayImageView(),
-                      SizedBox(height: SizeConfig.screenHeight * 0.04),
-                      _confirmButton(),
-                      SizedBox(height: SizeConfig.screenHeight * 0.03),
-                      _cancelButton(),
-                    ],
+              child: Container(
+                child: Center(
+                    child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: <Widget>[
+                          SizedBox(height: SizeConfig.screenHeight * 0.04),
+                          _displayImageView(),
+                          SizedBox(height: SizeConfig.screenHeight * 0.02),
+                          _confirmButton(),
+                          SizedBox(height: SizeConfig.screenHeight * 0.03),
+                          _cancelButton(),
+                          SizedBox(height: SizeConfig.screenHeight * 0.03),
+                        ],
+                      ),
                   ),
-                  SizedBox(height: SizeConfig.screenHeight * 0.03),
-                ],
               ),
             ),
           ),
@@ -205,9 +205,10 @@ class _BodyState extends State<Body> {
   }
 
   refreshImage(int userId) async {
-
+    // embeddingsystem.us-east-2.elasticbeanstalk.com
+    //192.168.8.126:8090
     var jsonResponse = null;
-    var response = await http.put("http://embeddingsystem.us-east-2.elasticbeanstalk.com/refresh/"+userId.toString());
+    var response = await http.put("http://192.168.8.126:8090/refresh/"+userId.toString());
 
     if(response.statusCode == 200) {
       jsonResponse = json.decode(response.body);
@@ -226,7 +227,7 @@ class _BodyState extends State<Body> {
             gravity: ToastGravity.BOTTOM,
             backgroundColor: Colors.tealAccent,
             textColor: Colors.black,
-            fontSize: 16.0);
+            fontSize: 15.0);
         reviewImage = jsonImage;
       }
 
@@ -238,12 +239,12 @@ class _BodyState extends State<Body> {
       });
 
       Fluttertoast.showToast(
-          msg: "Failure on server. Sorry....",
+          msg: "Failure on server. Please contact us.",
           toastLength: Toast.LENGTH_LONG,
           gravity: ToastGravity.BOTTOM,
           backgroundColor: Colors.tealAccent,
           textColor: Colors.black,
-          fontSize: 14.0);
+          fontSize: 15.0);
 
       print(response.body);
     }
@@ -252,7 +253,7 @@ class _BodyState extends State<Body> {
   cancelImage(int userId) async {
 
     var jsonResponse = null;
-    var response = await http.delete("http://embeddingsystem.us-east-2.elasticbeanstalk.com/cancelTempEmbedding/"+userId.toString());
+    var response = await http.delete("http://192.168.8.126:8090/cancelTempEmbedding/"+userId.toString());
 
     if(response.statusCode == 200) {
       jsonResponse = json.decode(response.body);
@@ -273,7 +274,7 @@ class _BodyState extends State<Body> {
             gravity: ToastGravity.BOTTOM,
             backgroundColor: Colors.tealAccent,
             textColor: Colors.black,
-            fontSize: 16.0);
+            fontSize: 15.0);
 
         Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(
             builder: (BuildContext context) => HomeScreen()), (
@@ -291,7 +292,7 @@ class _BodyState extends State<Body> {
               gravity: ToastGravity.BOTTOM,
               backgroundColor: Colors.tealAccent,
               textColor: Colors.black,
-              fontSize: 18.0);
+              fontSize: 15.0);
 
 
         }
@@ -301,16 +302,15 @@ class _BodyState extends State<Body> {
       }
 
       if(jsonException.length != 0){
+        print("you are in exception");
         print(jsonException[0]);
         Fluttertoast.showToast(
-            msg: jsonException[0],
+            msg: "Some problems occur with the application. Please contact us.",
             toastLength: Toast.LENGTH_LONG,
             gravity: ToastGravity.BOTTOM,
             backgroundColor: Colors.tealAccent,
             textColor: Colors.black,
-            fontSize: 18.0);
-        print("you are in exception");
-
+            fontSize: 15.0);
       }
 
 
@@ -321,12 +321,12 @@ class _BodyState extends State<Body> {
       });
 
       Fluttertoast.showToast(
-          msg: "Failure on server. Sorry....",
+          msg: "Failure on server. Please contact us.",
           toastLength: Toast.LENGTH_LONG,
           gravity: ToastGravity.BOTTOM,
           backgroundColor: Colors.tealAccent,
           textColor: Colors.black,
-          fontSize: 14.0);
+          fontSize: 15.0);
 
       print(response.body);
     }
@@ -335,7 +335,7 @@ class _BodyState extends State<Body> {
   confirmImage(int userId) async {
 
     var jsonResponse = null;
-    var response = await http.get("http://embeddingsystem.us-east-2.elasticbeanstalk.com/confirmEmbeddedImage/"+userId.toString());
+    var response = await http.get("http://192.168.8.126:8090/confirmEmbeddedImage/"+userId.toString());
 
     if(response.statusCode == 200) {
       jsonResponse = json.decode(response.body);
@@ -356,7 +356,7 @@ class _BodyState extends State<Body> {
             gravity: ToastGravity.BOTTOM,
             backgroundColor: Colors.tealAccent,
             textColor: Colors.black,
-            fontSize: 16.0);
+            fontSize: 15.0);
 
         Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(
             builder: (BuildContext context) => ShareScreen(jsonImage)), (
@@ -373,7 +373,7 @@ class _BodyState extends State<Body> {
               gravity: ToastGravity.BOTTOM,
               backgroundColor: Colors.tealAccent,
               textColor: Colors.black,
-              fontSize: 16.0);
+              fontSize: 15.0);
 
 
         }
@@ -383,16 +383,15 @@ class _BodyState extends State<Body> {
       }
 
       if(jsonException.length != 0){
+        print("you are in exception");
         print(jsonException[0]);
         Fluttertoast.showToast(
-            msg: jsonException[0],
+            msg: "Some problems occur with the application. Please contact us.",
             toastLength: Toast.LENGTH_LONG,
             gravity: ToastGravity.BOTTOM,
             backgroundColor: Colors.tealAccent,
             textColor: Colors.black,
-            fontSize: 18.0);
-        print("you are in exception");
-
+            fontSize: 15.0);
       }
 
     }else {
@@ -402,12 +401,12 @@ class _BodyState extends State<Body> {
       });
 
       Fluttertoast.showToast(
-          msg: "Failure on server. Sorry....",
+          msg: "Failure on server. Please contact us.",
           toastLength: Toast.LENGTH_LONG,
           gravity: ToastGravity.BOTTOM,
           backgroundColor: Colors.tealAccent,
           textColor: Colors.black,
-          fontSize: 14.0);
+          fontSize: 15.0);
 
       print(response.body);
     }
