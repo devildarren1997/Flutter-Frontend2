@@ -20,6 +20,7 @@ class _ResetPasswordFormState extends State<ResetPasswordForm> {
 
   final TextEditingController passwordController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
+  final String ip = globals.port;
   String password;
   String conform_password;
   bool _isLoading =false;
@@ -30,7 +31,7 @@ class _ResetPasswordFormState extends State<ResetPasswordForm> {
 //embeddingsystem.us-east-2.elasticbeanstalk.com
 //192.168.8.126:8090
     var jsonResponse = null;
-    var response = await http.post("http://192.168.8.126:8090/change_password",
+    var response = await http.post("http://$ip/change_password",
         body: jsonEncode(<String, String>{
           'password':password,
           'email':email,

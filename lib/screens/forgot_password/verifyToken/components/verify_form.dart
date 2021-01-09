@@ -9,6 +9,7 @@ import 'package:fypapp/screens/forgot_password/resetPassword/reset_password_scre
 import 'package:fypapp/size_config.dart';
 import 'package:fypapp/components/default_button.dart';
 import 'package:http/http.dart' as http;
+import 'package:fypapp/global.dart' as globals;
 
 class VerificationForm extends StatefulWidget {
   const VerificationForm({
@@ -24,6 +25,7 @@ class _VerificationFormState extends State<VerificationForm> {
   final _formKey = GlobalKey<FormState>();
   List<String> errors = [];
   String token;
+  final String ip = globals.port;
   bool _isLoading =false;
 
 
@@ -31,7 +33,7 @@ class _VerificationFormState extends State<VerificationForm> {
     // embeddingsystem.us-east-2.elasticbeanstalk.com
     //192.168.8.126:8090
     var jsonResponse = null;
-    var response = await http.post("http://192.168.8.126:8090/confirm_change_password",
+    var response = await http.post("http://$ip/confirm_change_password",
         body: jsonEncode(<String, String>{
       'token':token,
     }));

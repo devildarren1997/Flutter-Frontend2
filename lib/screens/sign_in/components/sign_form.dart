@@ -12,6 +12,7 @@ import 'package:fypapp/screens/login_success/login_success_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
+import 'package:fypapp/global.dart' as globals;
 
 
 class SignForm extends StatefulWidget {
@@ -25,6 +26,7 @@ class _SignFormState extends State<SignForm> {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
+  final String ip = globals.port;
   String email;
   String password;
   bool remember = false;
@@ -53,7 +55,7 @@ class _SignFormState extends State<SignForm> {
     // embeddingsystem.us-east-2.elasticbeanstalk.com
     //192.168.8.126:8090
     var jsonResponse = null;
-    var response = await http.post("http://192.168.8.126:8090/sign_in",
+    var response = await http.post("http://$ip/sign_in",
         headers: <String, String>{"Content-Type":"application/json"},
         body: jsonEncode(<String, String>{
           'email': email,

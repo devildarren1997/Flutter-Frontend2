@@ -56,6 +56,7 @@ class _ForgotPassFormState extends State<ForgotPassForm> {
   final TextEditingController emailController = TextEditingController();
   List<String> errors = [];
   String email;
+  final String ip = globals.port;
   bool _isLoading = false;
 
   void addError({String error}) {
@@ -76,7 +77,7 @@ class _ForgotPassFormState extends State<ForgotPassForm> {
     // embeddingsystem.us-east-2.elasticbeanstalk.com
     //192.168.8.126:8090
     var jsonResponse = null;
-    var response = await http.post("http://192.168.8.126:8090/forget_password",
+    var response = await http.post("http://$ip/forget_password",
         body: jsonEncode(<String, String>{
           'email': email,
         }));

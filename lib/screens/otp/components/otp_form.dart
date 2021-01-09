@@ -9,6 +9,7 @@ import 'package:fypapp/screens/sign_in/sign_in_screen.dart';
 import 'package:fypapp/size_config.dart';
 import 'package:fypapp/components/default_button.dart';
 import 'package:http/http.dart' as http;
+import 'package:fypapp/global.dart' as globals;
 
 class VerificationForm extends StatefulWidget {
   const VerificationForm({
@@ -22,6 +23,7 @@ class VerificationForm extends StatefulWidget {
 class _VerificationFormState extends State<VerificationForm> {
   final TextEditingController tokenController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
+  final String ip = globals.port;
   List<String> errors = [];
   String token;
   bool _isLoading =false;
@@ -30,7 +32,7 @@ class _VerificationFormState extends State<VerificationForm> {
     // embeddingsystem.us-east-2.elasticbeanstalk.com
     //192.168.8.126:8090
     var jsonResponse = null;
-    var response = await http.post("http://192.168.8.126:8090/confirm_user",
+    var response = await http.post("http://$ip/confirm_user",
         body: jsonEncode(<String, String>{
          'token':token,
         }));

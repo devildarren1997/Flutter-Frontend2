@@ -22,6 +22,7 @@ class Body extends StatefulWidget {
 class _BodyState extends State<Body> {
   var userId = globals.userId;
   var productId = globals.productId;
+  final String ip = globals.port;
   String reviewImage;
   bool _isLoading =false;
 
@@ -208,7 +209,7 @@ class _BodyState extends State<Body> {
     // embeddingsystem.us-east-2.elasticbeanstalk.com
     //192.168.8.126:8090
     var jsonResponse = null;
-    var response = await http.put("http://192.168.8.126:8090/refresh/"+userId.toString());
+    var response = await http.put("http://$ip/refresh/"+userId.toString());
 
     if(response.statusCode == 200) {
       jsonResponse = json.decode(response.body);
@@ -253,7 +254,7 @@ class _BodyState extends State<Body> {
   cancelImage(int userId) async {
 
     var jsonResponse = null;
-    var response = await http.delete("http://192.168.8.126:8090/cancelTempEmbedding/"+userId.toString());
+    var response = await http.delete("http://$ip/cancelTempEmbedding/"+userId.toString());
 
     if(response.statusCode == 200) {
       jsonResponse = json.decode(response.body);
@@ -335,7 +336,7 @@ class _BodyState extends State<Body> {
   confirmImage(int userId) async {
 
     var jsonResponse = null;
-    var response = await http.get("http://192.168.8.126:8090/confirmEmbeddedImage/"+userId.toString());
+    var response = await http.get("http://$ip/confirmEmbeddedImage/"+userId.toString());
 
     if(response.statusCode == 200) {
       jsonResponse = json.decode(response.body);

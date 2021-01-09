@@ -27,6 +27,7 @@ class Body extends StatefulWidget {
 class _BodyState extends State<Body> {
   final TextEditingController embedTextController = TextEditingController();
   final TextEditingController secondaryTextController = TextEditingController();
+  final String ip = globals.port;
   String embedText;
   int userId = globals.userId;
   String secondaryPassword;
@@ -41,7 +42,7 @@ class _BodyState extends State<Body> {
     // embeddingsystem.us-east-2.elasticbeanstalk.com
     //192.168.8.126:8090
     var jsonResponse = null;
-    var response = await http.post("http://192.168.8.126:8090/getTempEmbeddedImage",
+    var response = await http.post("http://$ip/getTempEmbeddedImage",
         body: jsonEncode(<String, dynamic>{
           'userId': userId,
           'filter': filterName,

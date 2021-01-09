@@ -9,6 +9,7 @@ import 'package:fypapp/components/custom_surfix_icon.dart';
 import 'package:fypapp/components/default_button.dart';
 import 'package:fypapp/components/form_error.dart';
 import 'package:http/http.dart' as http;
+import 'package:fypapp/global.dart' as globals;
 
 class SignUpForm extends StatefulWidget {
   @override
@@ -21,6 +22,7 @@ class _SignUpFormState extends State<SignUpForm> {
   final TextEditingController passwordController = TextEditingController();
   final TextEditingController usernameController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
+  final String ip = globals.port;
   String email;
   String password;
   String conform_password;
@@ -35,7 +37,7 @@ class _SignUpFormState extends State<SignUpForm> {
     // embeddingsystem.us-east-2.elasticbeanstalk.com
     //192.168.8.126:8090
     var jsonResponse = null;
-    var response = await http.post("http://192.168.8.126:8090/sign_up",
+    var response = await http.post("http://$ip/sign_up",
         headers:<String, String>{"Content-Type":"application/json"},
         body:jsonEncode(<String, String>{
           "email" : email,
