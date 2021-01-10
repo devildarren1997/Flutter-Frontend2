@@ -55,6 +55,13 @@ class _BodyState extends State<Body> {
       if(storageStatus != PermissionStatus.granted){
         storageStatus = await Permission.storage.request();
         if(storageStatus != PermissionStatus.granted){
+          Fluttertoast.showToast(
+              msg: "Permission denied.Please allow permission to access the storage",
+              toastLength: Toast.LENGTH_LONG,
+              gravity: ToastGravity.BOTTOM,
+              backgroundColor: Colors.tealAccent,
+              textColor: Colors.black,
+              fontSize: 15.0);
           throw 'Permission denied.Please allow permission to access the storage';
         }
       }
@@ -74,7 +81,7 @@ class _BodyState extends State<Body> {
             gravity: ToastGravity.BOTTOM,
             backgroundColor: Colors.tealAccent,
             textColor: Colors.black,
-            fontSize: 16.0);
+            fontSize: 15.0);
       }
 
       setState(() {
@@ -84,6 +91,13 @@ class _BodyState extends State<Body> {
 
     }catch(e){
       print(e.toString());
+      Fluttertoast.showToast(
+          msg: "Something went wrong to the function. Please contact us.",
+          toastLength: Toast.LENGTH_LONG,
+          gravity: ToastGravity.BOTTOM,
+          backgroundColor: Colors.tealAccent,
+          textColor: Colors.black,
+          fontSize: 15.0);
       setState(() {
         _isLoading = false;
       });
