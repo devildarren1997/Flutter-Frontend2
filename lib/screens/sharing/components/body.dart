@@ -4,11 +4,13 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:permission_handler/permission_handler.dart';
 import '../../../size_config.dart';
 import 'package:share/share.dart';
 import 'package:path_provider/path_provider.dart' as syspaths;
 import 'package:fypapp/global.dart' as globals;
 import 'package:fypapp/screens/home/home_screen.dart';
+import 'package:ext_storage/ext_storage.dart';
 
 
 class Body extends StatefulWidget {
@@ -43,34 +45,51 @@ class _BodyState extends State<Body> {
 
   }
 
-  void _downloadImage()async{
+  Future<void> _downloadImage()async{
     setState(() {
       _isLoading = true;
     });
 
-    final decodedBytes = base64Decode(widget.jsonImage);
-    String imagePath = globals.imagePath.split('/').last;
-    String imageName = imagePath.split('.').first;
-    final String path = ("/sdcard/Pictures");
-    File imageFile = new File("$path/MarkEmb/$imageName.png");
-    imageFile.createSync(recursive: true);
-    imageFile.writeAsBytesSync(decodedBytes, flush: true);
+    try{
+      PermissionStatus storageStatus = await Permission.storage.status;
+      if(storageStatus != PermissionStatus.granted){
+        storageStatus = await Permission.storage.request();
+        if(storageStatus != PermissionStatus.granted){
+          throw 'Permission denied.Please allow permission to access the storage';
+        }
+      }
 
-    if(imageFile != null){
-      Fluttertoast.showToast(
-          msg: "Image saved to sdcard/Pictures/MarkEmb",
-          toastLength: Toast.LENGTH_LONG,
-          gravity: ToastGravity.BOTTOM,
-          backgroundColor: Colors.tealAccent,
-          textColor: Colors.black,
-          fontSize: 16.0);
+      final decodedBytes = base64Decode(widget.jsonImage);
+      String imagePath = globals.imagePath.split('/').last;
+      String imageName = imagePath.split('.').first;
+      final String path = await ExtStorage.getExternalStoragePublicDirectory(ExtStorage.DIRECTORY_PICTURES);
+      File imageFile = new File("$path/MarkEmb/$imageName.png");
+      imageFile.createSync(recursive: true);
+      imageFile.writeAsBytesSync(decodedBytes, flush: true);
+
+      if(imageFile != null){
+        Fluttertoast.showToast(
+            msg: "Image saved to Pictures/MarkEmb",
+            toastLength: Toast.LENGTH_LONG,
+            gravity: ToastGravity.BOTTOM,
+            backgroundColor: Colors.tealAccent,
+            textColor: Colors.black,
+            fontSize: 16.0);
+      }
+
+      setState(() {
+        _isLoading = false;
+      });
+
+
+    }catch(e){
+      print(e.toString());
+      setState(() {
+        _isLoading = false;
+      });
     }
 
-    setState(() {
-      _isLoading = false;
-    });
   }
-
 
   Widget _displayImageView(){
       return Container(
