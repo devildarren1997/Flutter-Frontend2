@@ -64,7 +64,7 @@ List<Product> products = [
       designer: "Tan Qing Lin",
       description: "Data is embedded into the border created in the image. The embedding algorithm utilized the RGB value of pixels at image border.",
       image: 'assets/images/collagesEffect.png',
-      color: Color(0xFFE6B399),
+      color: Color(0x9FE6B399),
       textColor: Colors.white,
   ),
 ];

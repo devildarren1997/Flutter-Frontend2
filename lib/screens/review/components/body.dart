@@ -23,25 +23,15 @@ class _BodyState extends State<Body> {
   var userId = globals.userId;
   var productId = globals.productId;
   final String ip = globals.port;
-  String reviewImage;
   bool _isLoading =false;
 
   Widget _displayImageView(){
-      if(reviewImage == null){
       return Container(
           child: Image.memory(base64Decode(widget.jsonImage)),
             height: 300,
             width: 400,
             alignment: Alignment.topCenter,
         );
-  }else{
-        return Container(
-          child: Image.memory(base64Decode(reviewImage)),
-          height: 300,
-          width: 400,
-          alignment: Alignment.topCenter,
-        );
-      }
   }
 
 
@@ -76,38 +66,6 @@ class _BodyState extends State<Body> {
     );
   }
 
-  Widget _refreshButton(){
-    return Row(
-      children: [
-        Expanded(
-
-            child: SizedBox(
-              height: 50,
-              child: MaterialButton(
-                color: Colors.greenAccent,
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(18)),
-                onPressed: () async{
-                  setState(() {
-                    _isLoading = true;
-                  });
-
-                  refreshImage(userId);
-                },
-                child: Text(
-                  "Refresh the effect".toUpperCase(),
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black,
-                  ),
-                ),
-              ),
-            )
-        ),
-      ],
-    );
-  }
 
   Widget _cancelButton(){
     return Row(
@@ -144,37 +102,6 @@ class _BodyState extends State<Body> {
 
   @override
   Widget build(BuildContext context) {
-    if(productId == 1) {
-      return SafeArea(
-        child: _isLoading ? Center(child: CircularProgressIndicator()): SizedBox(
-          width: double.infinity,
-          child: Padding(
-            padding:
-            EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(10)),
-            child: SingleChildScrollView(
-              child: Container(
-                child: Center(
-                    child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: <Widget>[
-                          SizedBox(height: SizeConfig.screenHeight * 0.04),
-                          _displayImageView(),
-                          SizedBox(height: SizeConfig.screenHeight * 0.02),
-                          _refreshButton(),
-                          SizedBox(height: SizeConfig.screenHeight * 0.03),
-                          _confirmButton(),
-                          SizedBox(height: SizeConfig.screenHeight * 0.03),
-                          _cancelButton(),
-                          SizedBox(height: SizeConfig.screenHeight * 0.03),
-                        ],
-                      ),
-                  ),
-              ),
-            ),
-          ),
-        ),
-      );
-    }else{
       return SafeArea(
         child: _isLoading ? Center(child: CircularProgressIndicator()):SizedBox(
           width: double.infinity,
@@ -202,53 +129,6 @@ class _BodyState extends State<Body> {
           ),
         ),
       );
-    }
-  }
-
-  refreshImage(int userId) async {
-    // embeddingsystem.us-east-2.elasticbeanstalk.com
-    //192.168.8.126:8090
-    var jsonResponse = null;
-    var response = await http.put("http://$ip/refresh/"+userId.toString());
-
-    if(response.statusCode == 200) {
-      jsonResponse = json.decode(response.body);
-
-      var jsonString = jsonResponse['status'];
-      var jsonImage = jsonResponse['embeddedImage'];
-
-      if (jsonString == "s") {
-        setState(() {
-          _isLoading = false;
-        });
-
-        Fluttertoast.showToast(
-            msg: "You can review your image",
-            toastLength: Toast.LENGTH_LONG,
-            gravity: ToastGravity.BOTTOM,
-            backgroundColor: Colors.tealAccent,
-            textColor: Colors.black,
-            fontSize: 15.0);
-        reviewImage = jsonImage;
-      }
-
-
-    }else {
-      print("Status is not 200");
-      setState(() {
-        _isLoading = false;
-      });
-
-      Fluttertoast.showToast(
-          msg: "Failure on server. Please contact us.",
-          toastLength: Toast.LENGTH_LONG,
-          gravity: ToastGravity.BOTTOM,
-          backgroundColor: Colors.tealAccent,
-          textColor: Colors.black,
-          fontSize: 15.0);
-
-      print(response.body);
-    }
   }
 
   cancelImage(int userId) async {
@@ -260,7 +140,6 @@ class _BodyState extends State<Body> {
       jsonResponse = json.decode(response.body);
 
       var jsonString = jsonResponse['status'];
-      var jsonImage = jsonResponse['embeddedImage'];
       var jsonException = [];
       jsonException = jsonResponse['exception'];
 
@@ -273,7 +152,7 @@ class _BodyState extends State<Body> {
             msg: "You have cancel the image embedding\nReturn to Home",
             toastLength: Toast.LENGTH_LONG,
             gravity: ToastGravity.BOTTOM,
-            backgroundColor: Colors.tealAccent,
+            backgroundColor: Colors.greenAccent,
             textColor: Colors.black,
             fontSize: 15.0);
 
@@ -291,8 +170,8 @@ class _BodyState extends State<Body> {
               msg: jsonErrorMessage[0],
               toastLength: Toast.LENGTH_LONG,
               gravity: ToastGravity.BOTTOM,
-              backgroundColor: Colors.tealAccent,
-              textColor: Colors.black,
+              backgroundColor: Colors.redAccent,
+              textColor: Colors.white,
               fontSize: 15.0);
 
 
@@ -309,8 +188,8 @@ class _BodyState extends State<Body> {
             msg: "Some problems occur with the application. Please contact us.",
             toastLength: Toast.LENGTH_LONG,
             gravity: ToastGravity.BOTTOM,
-            backgroundColor: Colors.tealAccent,
-            textColor: Colors.black,
+            backgroundColor: Colors.redAccent,
+            textColor: Colors.white,
             fontSize: 15.0);
       }
 
@@ -325,8 +204,8 @@ class _BodyState extends State<Body> {
           msg: "Failure on server. Please contact us.",
           toastLength: Toast.LENGTH_LONG,
           gravity: ToastGravity.BOTTOM,
-          backgroundColor: Colors.tealAccent,
-          textColor: Colors.black,
+          backgroundColor: Colors.redAccent,
+          textColor: Colors.white,
           fontSize: 15.0);
 
       print(response.body);
@@ -342,7 +221,7 @@ class _BodyState extends State<Body> {
       jsonResponse = json.decode(response.body);
 
       var jsonString = jsonResponse['status'];
-      var jsonImage = jsonResponse['embeddedImage'];
+      var jsonImage = widget.jsonImage;
       var jsonException = [];
       jsonException = jsonResponse['exception'];
 
@@ -355,7 +234,7 @@ class _BodyState extends State<Body> {
             msg: "You can now share your image",
             toastLength: Toast.LENGTH_LONG,
             gravity: ToastGravity.BOTTOM,
-            backgroundColor: Colors.tealAccent,
+            backgroundColor: Colors.greenAccent,
             textColor: Colors.black,
             fontSize: 15.0);
 
@@ -372,8 +251,8 @@ class _BodyState extends State<Body> {
               msg: jsonErrorMessage[0],
               toastLength: Toast.LENGTH_LONG,
               gravity: ToastGravity.BOTTOM,
-              backgroundColor: Colors.tealAccent,
-              textColor: Colors.black,
+              backgroundColor: Colors.redAccent,
+              textColor: Colors.white,
               fontSize: 15.0);
 
 
@@ -390,8 +269,8 @@ class _BodyState extends State<Body> {
             msg: "Some problems occur with the application. Please contact us.",
             toastLength: Toast.LENGTH_LONG,
             gravity: ToastGravity.BOTTOM,
-            backgroundColor: Colors.tealAccent,
-            textColor: Colors.black,
+            backgroundColor: Colors.redAccent,
+            textColor: Colors.white,
             fontSize: 15.0);
       }
 
@@ -405,8 +284,8 @@ class _BodyState extends State<Body> {
           msg: "Failure on server. Please contact us.",
           toastLength: Toast.LENGTH_LONG,
           gravity: ToastGravity.BOTTOM,
-          backgroundColor: Colors.tealAccent,
-          textColor: Colors.black,
+          backgroundColor: Colors.redAccent,
+          textColor: Colors.white,
           fontSize: 15.0);
 
       print(response.body);

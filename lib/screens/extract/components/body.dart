@@ -65,7 +65,7 @@ class _BodyState extends State<Body> {
               msg: "This is the extract message",
               toastLength: Toast.LENGTH_LONG,
               gravity: ToastGravity.BOTTOM,
-              backgroundColor: Colors.tealAccent,
+              backgroundColor: Colors.greenAccent,
               textColor: Colors.black,
               fontSize: 15.0);
         _showExtractDialog(context);
@@ -74,8 +74,8 @@ class _BodyState extends State<Body> {
               msg: "No message found",
               toastLength: Toast.LENGTH_LONG,
               gravity: ToastGravity.BOTTOM,
-              backgroundColor: Colors.tealAccent,
-              textColor: Colors.black,
+              backgroundColor: Colors.redAccent,
+              textColor: Colors.white,
               fontSize: 15.0);
           extractedText = "We couldn't find message embedded in the image.\nPlease input the correct image";
           _showExtractDialog(context);
@@ -90,8 +90,8 @@ class _BodyState extends State<Body> {
                 msg: jsonErrorMessage[0],
                 toastLength: Toast.LENGTH_LONG,
                 gravity: ToastGravity.BOTTOM,
-                backgroundColor: Colors.tealAccent,
-                textColor: Colors.black,
+                backgroundColor: Colors.redAccent,
+                textColor: Colors.white,
                 fontSize: 15.0);
             extractedText = jsonErrorMessage[0];
             _showExtractDialog(context);
@@ -109,8 +109,8 @@ class _BodyState extends State<Body> {
             msg: "Some problems occur with the application. Please contact us.",
             toastLength: Toast.LENGTH_LONG,
             gravity: ToastGravity.BOTTOM,
-            backgroundColor: Colors.tealAccent,
-            textColor: Colors.black,
+            backgroundColor: Colors.redAccent,
+            textColor: Colors.white,
             fontSize: 15.0);
       }
 
@@ -124,8 +124,8 @@ class _BodyState extends State<Body> {
           msg: "Failure on server. Please contact us.",
           toastLength: Toast.LENGTH_LONG,
           gravity: ToastGravity.BOTTOM,
-          backgroundColor: Colors.tealAccent,
-          textColor: Colors.black,
+          backgroundColor: Colors.redAccent,
+          textColor: Colors.white,
           fontSize: 15.0);
 
       print(response.body);
@@ -358,8 +358,8 @@ class _BodyState extends State<Body> {
                                           msg: "Please insert an image",
                                           toastLength: Toast.LENGTH_LONG,
                                           gravity: ToastGravity.BOTTOM,
-                                          backgroundColor: Colors.tealAccent,
-                                          textColor: Colors.black,
+                                          backgroundColor: Colors.redAccent,
+                                          textColor: Colors.white,
                                           fontSize: 16.0);
                                     }else{
 

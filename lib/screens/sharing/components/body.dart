@@ -59,8 +59,8 @@ class _BodyState extends State<Body> {
               msg: "Permission denied.Please allow permission to access the storage",
               toastLength: Toast.LENGTH_LONG,
               gravity: ToastGravity.BOTTOM,
-              backgroundColor: Colors.tealAccent,
-              textColor: Colors.black,
+              backgroundColor: Colors.redAccent,
+              textColor: Colors.white,
               fontSize: 15.0);
           throw 'Permission denied.Please allow permission to access the storage';
         }
@@ -79,7 +79,7 @@ class _BodyState extends State<Body> {
             msg: "Image saved to Pictures/MarkEmb",
             toastLength: Toast.LENGTH_LONG,
             gravity: ToastGravity.BOTTOM,
-            backgroundColor: Colors.tealAccent,
+            backgroundColor: Colors.greenAccent,
             textColor: Colors.black,
             fontSize: 15.0);
       }
@@ -95,8 +95,8 @@ class _BodyState extends State<Body> {
           msg: "Something went wrong to the function. Please contact us.",
           toastLength: Toast.LENGTH_LONG,
           gravity: ToastGravity.BOTTOM,
-          backgroundColor: Colors.tealAccent,
-          textColor: Colors.black,
+          backgroundColor: Colors.redAccent,
+          textColor: Colors.white,
           fontSize: 15.0);
       setState(() {
         _isLoading = false;

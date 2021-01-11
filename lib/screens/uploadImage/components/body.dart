@@ -69,7 +69,7 @@ class _BodyState extends State<Body> {
             msg: "You can review your image",
             toastLength: Toast.LENGTH_LONG,
             gravity: ToastGravity.BOTTOM,
-            backgroundColor: Colors.tealAccent,
+            backgroundColor: Colors.greenAccent,
             textColor: Colors.black,
             fontSize: 15.0);
 
@@ -86,8 +86,8 @@ class _BodyState extends State<Body> {
                 msg: jsonErrorMessage[0],
                 toastLength: Toast.LENGTH_LONG,
                 gravity: ToastGravity.BOTTOM,
-                backgroundColor: Colors.tealAccent,
-                textColor: Colors.black,
+                backgroundColor: Colors.redAccent,
+                textColor: Colors.white,
                 fontSize: 15.0);
 
 
@@ -104,8 +104,8 @@ class _BodyState extends State<Body> {
             msg: "Some problems occur with the application. Please contact us.",
             toastLength: Toast.LENGTH_LONG,
             gravity: ToastGravity.BOTTOM,
-            backgroundColor: Colors.tealAccent,
-            textColor: Colors.black,
+            backgroundColor: Colors.redAccent,
+            textColor: Colors.white,
             fontSize: 15.0);
       }
 
@@ -119,8 +119,8 @@ class _BodyState extends State<Body> {
           msg: "Failure on server. Please contact us.",
           toastLength: Toast.LENGTH_LONG,
           gravity: ToastGravity.BOTTOM,
-          backgroundColor: Colors.tealAccent,
-          textColor: Colors.black,
+          backgroundColor: Colors.redAccent,
+          textColor: Colors.white,
           fontSize: 15.0);
 
       print(response.body);
@@ -372,8 +372,8 @@ class _BodyState extends State<Body> {
                                                       msg: "Please insert an image",
                                                       toastLength: Toast.LENGTH_LONG,
                                                       gravity: ToastGravity.BOTTOM,
-                                                      backgroundColor: Colors.tealAccent,
-                                                      textColor: Colors.black,
+                                                      backgroundColor: Colors.redAccent,
+                                                      textColor: Colors.white,
                                                       fontSize: 16.0);
                                                 }else{
                                                   String imagePath = imageFile.path.split('/').last;

@@ -89,8 +89,8 @@ class _SignFormState extends State<SignForm> {
                 msg: "You enter wrong email or password",
                 toastLength: Toast.LENGTH_LONG,
                 gravity: ToastGravity.BOTTOM,
-                backgroundColor: Colors.tealAccent,
-                textColor: Colors.black,
+                backgroundColor: Colors.redAccent,
+                textColor: Colors.white,
                 fontSize: 15.0);
 
           }else if(error.contains("Account has not")){
@@ -99,8 +99,8 @@ class _SignFormState extends State<SignForm> {
                 msg: "You have not activate your account",
                 toastLength: Toast.LENGTH_LONG,
                 gravity: ToastGravity.BOTTOM,
-                backgroundColor: Colors.tealAccent,
-                textColor: Colors.black,
+                backgroundColor: Colors.redAccent,
+                textColor: Colors.white,
                 fontSize: 15.0);
           }
         }
@@ -116,8 +116,8 @@ class _SignFormState extends State<SignForm> {
             msg: "Some problems occur with the application. Please contact us.",
             toastLength: Toast.LENGTH_LONG,
             gravity: ToastGravity.BOTTOM,
-            backgroundColor: Colors.tealAccent,
-            textColor: Colors.black,
+            backgroundColor: Colors.redAccent,
+            textColor: Colors.white,
             fontSize: 15.0);
       }
 
@@ -131,8 +131,8 @@ class _SignFormState extends State<SignForm> {
           msg: "Failure on server. Please contact us.",
           toastLength: Toast.LENGTH_LONG,
           gravity: ToastGravity.BOTTOM,
-          backgroundColor: Colors.tealAccent,
-          textColor: Colors.black,
+          backgroundColor: Colors.redAccent,
+          textColor: Colors.white,
           fontSize: 15.0);
 
       print(response.body);

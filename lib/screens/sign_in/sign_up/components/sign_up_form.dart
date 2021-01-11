@@ -59,7 +59,7 @@ class _SignUpFormState extends State<SignUpForm> {
             msg: "You have successfully register your account\nActivate it",
             toastLength: Toast.LENGTH_LONG,
             gravity: ToastGravity.BOTTOM,
-            backgroundColor: Colors.tealAccent,
+            backgroundColor: Colors.greenAccent,
             textColor: Colors.black,
             fontSize: 15.0);
 
@@ -75,8 +75,8 @@ class _SignUpFormState extends State<SignUpForm> {
                 msg: "You have registered the account but never activate yet\nPlease check your email for activation token.",
                 toastLength: Toast.LENGTH_LONG,
                 gravity: ToastGravity.BOTTOM,
-                backgroundColor: Colors.tealAccent,
-                textColor: Colors.black,
+                backgroundColor: Colors.redAccent,
+                textColor: Colors.white,
                 fontSize: 15.0);
             Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (BuildContext context) => OtpScreen()), (Route<dynamic> route) => false);
 
@@ -85,8 +85,8 @@ class _SignUpFormState extends State<SignUpForm> {
                 msg: "Something went wrong with Email Server. Please contact us.",
                 toastLength: Toast.LENGTH_LONG,
                 gravity: ToastGravity.BOTTOM,
-                backgroundColor: Colors.tealAccent,
-                textColor: Colors.black,
+                backgroundColor: Colors.redAccent,
+                textColor: Colors.white,
                 fontSize: 15.0);
 
           }else if(error.contains("Account has registered.")){
@@ -94,8 +94,8 @@ class _SignUpFormState extends State<SignUpForm> {
                 msg: "The account is registered before.",
                 toastLength: Toast.LENGTH_LONG,
                 gravity: ToastGravity.BOTTOM,
-                backgroundColor: Colors.tealAccent,
-                textColor: Colors.black,
+                backgroundColor: Colors.redAccent,
+                textColor: Colors.white,
                 fontSize: 15.0);
           }
         }
@@ -111,8 +111,8 @@ class _SignUpFormState extends State<SignUpForm> {
             msg: "Some problems occur with the application. Please contact us.",
             toastLength: Toast.LENGTH_LONG,
             gravity: ToastGravity.BOTTOM,
-            backgroundColor: Colors.tealAccent,
-            textColor: Colors.black,
+            backgroundColor: Colors.redAccent,
+            textColor: Colors.white,
             fontSize: 15.0);
       }
 
@@ -126,8 +126,8 @@ class _SignUpFormState extends State<SignUpForm> {
           msg: "Failure on server. Please contact us.",
           toastLength: Toast.LENGTH_LONG,
           gravity: ToastGravity.BOTTOM,
-          backgroundColor: Colors.tealAccent,
-          textColor: Colors.black,
+          backgroundColor: Colors.redAccent,
+          textColor: Colors.white,
           fontSize: 15.0);
 
       print(response.body);

@@ -53,7 +53,7 @@ class _ResetPasswordFormState extends State<ResetPasswordForm> {
             msg: "You have successfully changed the password",
             toastLength: Toast.LENGTH_LONG,
             gravity: ToastGravity.BOTTOM,
-            backgroundColor: Colors.tealAccent,
+            backgroundColor: Colors.greenAccent,
             textColor: Colors.black,
             fontSize: 15.0);
 
@@ -70,8 +70,8 @@ class _ResetPasswordFormState extends State<ResetPasswordForm> {
                 msg: "The new password is similar to old password.\nPlease enter again",
                 toastLength: Toast.LENGTH_LONG,
                 gravity: ToastGravity.BOTTOM,
-                backgroundColor: Colors.tealAccent,
-                textColor: Colors.black,
+                backgroundColor: Colors.redAccent,
+                textColor: Colors.white,
                 fontSize: 15.0);
 
           }else if(error.contains("Code 101")){
@@ -79,8 +79,8 @@ class _ResetPasswordFormState extends State<ResetPasswordForm> {
                 msg: "Error occur at database. Please contact us.",
                 toastLength: Toast.LENGTH_LONG,
                 gravity: ToastGravity.BOTTOM,
-                backgroundColor: Colors.tealAccent,
-                textColor: Colors.black,
+                backgroundColor: Colors.redAccent,
+                textColor: Colors.white,
                 fontSize: 15.0);
           }
         }
@@ -96,8 +96,8 @@ class _ResetPasswordFormState extends State<ResetPasswordForm> {
             msg: "Some problems occur with the application. Please contact us.",
             toastLength: Toast.LENGTH_LONG,
             gravity: ToastGravity.BOTTOM,
-            backgroundColor: Colors.tealAccent,
-            textColor: Colors.black,
+            backgroundColor: Colors.redAccent,
+            textColor: Colors.white,
             fontSize: 15.0);
       }
 
@@ -111,8 +111,8 @@ class _ResetPasswordFormState extends State<ResetPasswordForm> {
           msg: "Failure on server. Please contact us.",
           toastLength: Toast.LENGTH_LONG,
           gravity: ToastGravity.BOTTOM,
-          backgroundColor: Colors.tealAccent,
-          textColor: Colors.black,
+          backgroundColor: Colors.redAccent,
+          textColor: Colors.white,
           fontSize: 15.0);
 
       print(response.body);

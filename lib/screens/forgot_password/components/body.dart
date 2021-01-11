@@ -94,7 +94,7 @@ class _ForgotPassFormState extends State<ForgotPassForm> {
             msg: "A token is sent to your email",
             toastLength: Toast.LENGTH_LONG,
             gravity: ToastGravity.BOTTOM,
-            backgroundColor: Colors.tealAccent,
+            backgroundColor: Colors.greenAccent,
             textColor: Colors.black,
             fontSize: 15.0);
 
@@ -115,8 +115,8 @@ class _ForgotPassFormState extends State<ForgotPassForm> {
                 msg: "Email entered does not exist",
                 toastLength: Toast.LENGTH_LONG,
                 gravity: ToastGravity.BOTTOM,
-                backgroundColor: Colors.tealAccent,
-                textColor: Colors.black,
+                backgroundColor: Colors.redAccent,
+                textColor: Colors.white,
                 fontSize: 15.0);
 
           }else if(error.contains("Something wrong")){
@@ -124,8 +124,8 @@ class _ForgotPassFormState extends State<ForgotPassForm> {
                 msg: "Something went wrong with Email Server. Please contact us.",
                 toastLength: Toast.LENGTH_LONG,
                 gravity: ToastGravity.BOTTOM,
-                backgroundColor: Colors.tealAccent,
-                textColor: Colors.black,
+                backgroundColor: Colors.redAccent,
+                textColor: Colors.white,
                 fontSize: 18.0);
           }
         }
@@ -141,8 +141,8 @@ class _ForgotPassFormState extends State<ForgotPassForm> {
             msg: "Some problems occur with the application. Please contact us.",
             toastLength: Toast.LENGTH_LONG,
             gravity: ToastGravity.BOTTOM,
-            backgroundColor: Colors.tealAccent,
-            textColor: Colors.black,
+            backgroundColor: Colors.redAccent,
+            textColor: Colors.white,
             fontSize: 15.0);
       }
     }
@@ -156,8 +156,8 @@ class _ForgotPassFormState extends State<ForgotPassForm> {
           msg: "Failure on server. Please contact us.",
           toastLength: Toast.LENGTH_LONG,
           gravity: ToastGravity.BOTTOM,
-          backgroundColor: Colors.tealAccent,
-          textColor: Colors.black,
+          backgroundColor: Colors.redAccent,
+          textColor: Colors.white,
           fontSize: 15.0);
 
       print(response.body);
