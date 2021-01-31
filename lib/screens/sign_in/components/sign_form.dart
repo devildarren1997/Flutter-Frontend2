@@ -74,6 +74,7 @@ class _SignFormState extends State<SignForm> {
           _isLoading = false;
         });
         sharedPreferences.setString("token", jsonResponse['token']);
+
         Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(
             builder: (BuildContext context) => LoginSuccessScreen(jsonUserId)), (
             Route<dynamic> route) => false);
