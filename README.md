@@ -1,16 +1,13 @@
-# fypapp
+# MarkEmb
 
-A new Flutter application.
+## To Run The Project
+1. Install Android Studio
+2. Install Flutter plugin in Android Studio
+3. Import the project to Android Studio
+4. Plug in an android mobile phone and run the project instead of running it on emulator (Android studio will build the apk and install MarkEmb on the phone)
 
-## Getting Started
+## If get license error during running the project
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+1. Open the terminal 
+2. Run the command: flutter doctor --android-licenses
+3. Press y to accept all the licenses
